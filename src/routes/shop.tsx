@@ -37,7 +37,7 @@ function ReactionButtons({ initialPen, initialBulb }: { initialPen: number, init
 
   return (
     <div className="flex gap-3 mt-3 mb-1">
-      <button 
+      <button
         onClick={() => setPen(p => ({ count: p.active ? p.count - 1 : p.count + 1, active: !p.active }))}
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${pen.active ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-secondary/50 text-secondary-foreground hover:bg-secondary border border-transparent'}`}
         title="Loved writing!"
@@ -45,7 +45,7 @@ function ReactionButtons({ initialPen, initialBulb }: { initialPen: number, init
         <PenTool className="w-3.5 h-3.5" />
         {pen.count}
       </button>
-      <button 
+      <button
         onClick={() => setBulb(b => ({ count: b.active ? b.count - 1 : b.count + 1, active: !b.active }))}
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${bulb.active ? 'bg-amber/10 text-amber-600 border border-amber/20' : 'bg-secondary/50 text-secondary-foreground hover:bg-secondary border border-transparent'}`}
         title="Thinking of buying"
@@ -130,8 +130,8 @@ function ShopPage() {
       amazonLink: "https://mybook.to/thinkandink-girl",
       images: [girlCover3d, coverFull, girlEdition1, girlEdition2, girlEdition3, girlEdition4, girlEdition5, girlEdition6, girlEdition7],
       icon: BookOpen,
-      penCount: 42,
-      bulbCount: 18,
+      penCount: 25,
+      bulbCount: 11,
     },
     {
       title: "Brave • Curious • Me  Boy Edition",
@@ -140,8 +140,8 @@ function ShopPage() {
       badge: "New",
       images: [boyEdition1, boyEdition7, boyEdition6, boyEdition8, boyEdition5, boyEdition3, boyEdition4, boyEdition2],
       icon: Flower2,
-      penCount: 24,
-      bulbCount: 12,
+      penCount: 5,
+      bulbCount: 2,
     },
   ];
 
