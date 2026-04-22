@@ -130,6 +130,8 @@ function ShopPage() {
       amazonLink: "https://mybook.to/thinkandink-girl",
       images: [girlCover3d, coverFull, girlEdition1, girlEdition2, girlEdition3, girlEdition4, girlEdition5, girlEdition6, girlEdition7],
       icon: BookOpen,
+      penCount: 42,
+      bulbCount: 18,
     },
     {
       title: "Brave • Curious • Me  Boy Edition",
@@ -138,6 +140,8 @@ function ShopPage() {
       badge: "New",
       images: [boyEdition1, boyEdition7, boyEdition6, boyEdition8, boyEdition5, boyEdition3, boyEdition4, boyEdition2],
       icon: Flower2,
+      penCount: 24,
+      bulbCount: 12,
     },
   ];
 
@@ -193,7 +197,7 @@ function ShopPage() {
                     </div>
                     <h3 className="font-display text-lg font-bold text-foreground">{product.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{product.desc}</p>
-                    <ReactionButtons initialPen={142 + (i * 27)} initialBulb={89 + (i * 14)} />
+                    <ReactionButtons initialPen={product.penCount} initialBulb={product.bulbCount} />
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <span className="font-display text-xl font-bold text-primary">{product.price}</span>
                       {product.price !== "Coming Soon" && (
