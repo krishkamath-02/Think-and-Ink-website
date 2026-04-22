@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Lightbulb, TrendingUp, PenLine, Moon } from "lucide-react";
+import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Lightbulb, TrendingUp, PenLine, Moon, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-lifestyle.png";
 import coverGirl from "@/assets/product-mockup-3d.png";
@@ -75,16 +75,17 @@ function Index() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link to="/shop">
-                <Button variant="hero" size="lg" className="text-base px-8 py-6">
+                <Button variant="hero" size="lg" className="text-base px-8 py-6 w-full sm:w-auto">
                   <BookOpen className="w-5 h-5 mr-2" />
                   Explore Journals
                 </Button>
               </Link>
-              <Link to="/about">
-                <Button variant="hero-outline" size="lg" className="text-base px-8 py-6">
-                  Our Story
+              <a href="https://mybook.to/thinkandink-girl" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="lg" className="text-base px-8 py-6 bg-white/50 backdrop-blur-sm border-primary/20 hover:bg-primary/5 hover:text-primary w-full sm:w-auto">
+                  <Globe className="w-5 h-5 mr-2" />
+                  Amazon Global
                 </Button>
-              </Link>
+              </a>
             </div>
           </Reveal>
           <Reveal direction="up" delay={0.2} className="flex-1 flex justify-center">

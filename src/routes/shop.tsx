@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock } from "lucide-react";
+import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe } from "lucide-react";
 import coverFull from "@/assets/cover-girl-edition.png";
 import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
@@ -101,6 +101,7 @@ function ShopPage() {
       desc: "Our signature guided journal packed with prompts, affirmations, and creative exercises for ages 6–12.",
       price: "₹599",
       badge: "Bestseller",
+      amazonLink: "https://mybook.to/thinkandink-girl",
       images: [girlCover3d, coverFull, girlEdition1, girlEdition2, girlEdition3, girlEdition4, girlEdition5, girlEdition6, girlEdition7],
       icon: BookOpen,
     },
@@ -166,18 +167,32 @@ function ShopPage() {
                     </div>
                     <h3 className="font-display text-lg font-bold text-foreground">{product.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{product.desc}</p>
-                    <div className="mt-4 flex items-center justify-between">
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <span className="font-display text-xl font-bold text-primary">{product.price}</span>
                       {product.price !== "Coming Soon" && (
-                        <Button
-                          variant="hero"
-                          size="sm"
-                          onClick={() => setSelectedProduct({ title: product.title, price: product.price })}
-                          className="flex items-center gap-1.5"
-                        >
-                          <MessageCircle className="w-4 h-4" />
-                          Order via WhatsApp
-                        </Button>
+                        <div className="flex flex-col gap-2 w-full sm:w-auto">
+                          <Button
+                            variant="hero"
+                            size="sm"
+                            onClick={() => setSelectedProduct({ title: product.title, price: product.price })}
+                            className="flex items-center gap-1.5 w-full"
+                          >
+                            <MessageCircle className="w-4 h-4" />
+                            Order via WhatsApp
+                          </Button>
+                          {product.amazonLink && (
+                            <a href={product.amazonLink} target="_blank" rel="noopener noreferrer" className="w-full">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex items-center justify-center gap-1.5 w-full border-primary/20 hover:bg-primary/5 hover:text-primary"
+                              >
+                                <Globe className="w-4 h-4" />
+                                Amazon Global
+                              </Button>
+                            </a>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -209,6 +224,9 @@ function ShopPage() {
                 <h3 className="font-display text-lg font-bold text-foreground mb-2">Pan-India Delivery</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   We ship to every corner of India. Delivery takes <span className="font-semibold text-foreground">3–7 business days</span> depending on your location.
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed mt-2 border-t border-border/50 pt-2">
+                  For international orders, please order via our <a href="https://mybook.to/thinkandink-girl" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline inline-flex items-center gap-1">Amazon Global Store <Globe className="w-3 h-3" /></a>.
                 </p>
               </div>
             </Reveal>
