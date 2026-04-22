@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe } from "lucide-react";
+import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe, PenTool, Lightbulb } from "lucide-react";
 import coverFull from "@/assets/cover-girl-edition.png";
 import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
@@ -30,6 +30,32 @@ import boyEdition5 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 
 import boyEdition6 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16 (1).jpeg";
 import boyEdition7 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16 (2).jpeg";
 import boyEdition8 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16.jpeg";
+
+function ReactionButtons({ initialPen, initialBulb }: { initialPen: number, initialBulb: number }) {
+  const [pen, setPen] = useState({ count: initialPen, active: false });
+  const [bulb, setBulb] = useState({ count: initialBulb, active: false });
+
+  return (
+    <div className="flex gap-3 mt-3 mb-1">
+      <button 
+        onClick={() => setPen(p => ({ count: p.active ? p.count - 1 : p.count + 1, active: !p.active }))}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${pen.active ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-secondary/50 text-secondary-foreground hover:bg-secondary border border-transparent'}`}
+        title="Loved writing!"
+      >
+        <PenTool className="w-3.5 h-3.5" />
+        {pen.count}
+      </button>
+      <button 
+        onClick={() => setBulb(b => ({ count: b.active ? b.count - 1 : b.count + 1, active: !b.active }))}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${bulb.active ? 'bg-amber/10 text-amber-600 border border-amber/20' : 'bg-secondary/50 text-secondary-foreground hover:bg-secondary border border-transparent'}`}
+        title="Thinking of buying"
+      >
+        <Lightbulb className="w-3.5 h-3.5" />
+        {bulb.count}
+      </button>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -167,6 +193,7 @@ function ShopPage() {
                     </div>
                     <h3 className="font-display text-lg font-bold text-foreground">{product.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{product.desc}</p>
+                    <ReactionButtons initialPen={142 + (i * 27)} initialBulb={89 + (i * 14)} />
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <span className="font-display text-xl font-bold text-primary">{product.price}</span>
                       {product.price !== "Coming Soon" && (
