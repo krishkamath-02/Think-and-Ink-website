@@ -137,7 +137,7 @@ function ShopPage() {
       title: "Brave • Curious • Me  Boy Edition",
       desc: "Our special edition guided journal packed with prompts, affirmations, and creative exercises for boys ages 6–12.",
       price: "₹599",
-      badge: "New",
+      badge: "Just Launched",
       images: [boyEdition1, boyEdition7, boyEdition6, boyEdition8, boyEdition5, boyEdition3, boyEdition4, boyEdition2],
       icon: Flower2,
       penCount: 5,

@@ -31,7 +31,7 @@ export function Header() {
       sublabel: "Brave • Curious • Me",
       emoji: "🚀",
       href: "/shop",
-      badge: "New",
+      badge: "Just Launched",
     },
     {
       label: "Coming Soon",

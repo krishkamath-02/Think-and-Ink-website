@@ -121,7 +121,7 @@ function Index() {
                 />
                 <div className="absolute -bottom-4 -right-4 bg-amber text-amber-foreground rounded-2xl px-3 py-1.5 shadow-lg animate-sparkle animation-delay-600 z-10">
                   <Star className="w-4 h-4 inline mr-1" />
-                  <span className="text-xs font-bold">New!</span>
+                  <span className="text-xs font-bold">Just Launched!</span>
                 </div>
               </div>
 
