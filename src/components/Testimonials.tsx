@@ -10,30 +10,34 @@ import { Reveal } from "@/components/Reveal";
 
 const testimonials = [
   {
-    quote: "My daughter used to struggle to explain how her day went. This journal changed everything. The prompts are gentle and she actually looks forward to filling it out!",
-    author: "Sarah M.",
+    quote: `Now this is really something awesome, I am in love with the book❤️❤️ and it is 
+    just the perfect thing that I was looking for my daughter...she is a child with a high EQ 
+    but mature in hiding her feelings since my second child, I wanted something that will 
+    enable her to express...so thank you for doing this!!! And the personal note, don't know 
+    about my daughter but I was moved🥹🥹🥹`,
+    author: "Aanchal Agarwal",
+    role: "Mother of a 6-year-old",
+    rating: 5,
+  },
+  {
+    quote: "My daughter is is loving the journal, Kudos to you for taking this forward:",
+    author: "Dipsy Kundal",
+    role: "I.T Professional and Mother of a 7-year-old",
+    rating: 5,
+  },
+  {
+    quote: "We received the book,we loved it. Specially the note that is really appreciated. I stuck it in the book itself. 😊❤️",
+    author: "Simran Moolani",
     role: "Mother of a 7-year-old",
     rating: 5,
   },
   {
-    quote: "As a child psychologist, I often recommend Think & Ink. It's brilliantly structured to build emotional intelligence and confidence without feeling like 'homework'.",
-    author: "Dr. Emily R.",
-    role: "Child Psychologist",
-    rating: 5,
-  },
-  {
-    quote: "The stickers and creative drawing pages make my son excited to write every day. It's beautifully crafted and feels like a truly premium keepsake.",
-    author: "Mark T.",
-    role: "Father of a 9-year-old",
-    rating: 5,
-  },
-  {
-    quote: "I bought these for my classroom. It's amazing to see the quietest kids open up and express their big feelings on these pages.",
-    author: "Jessica C.",
-    role: "2nd Grade Teacher",
+    quote: "Thank you for such thoughtful gifts for my neice. She loved it. She has already started writing in her journal..",
+    author: "Ritu Punjabi",
+    role: "Image consultant and Aunt of an 8-year-old",
     rating: 5,
   }
-];
+]
 
 export function Testimonials() {
   return (
@@ -63,17 +67,17 @@ export function Testimonials() {
                 <CarouselItem key={index} className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/2">
                   <div className="bg-card h-full rounded-3xl p-8 md:p-10 shadow-sm border border-border/50 relative group hover:shadow-xl transition-shadow duration-300">
                     <Quote className="absolute top-8 right-8 w-10 h-10 text-primary/10 rotate-180" />
-                    
+
                     <div className="flex gap-1 mb-6">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 text-amber fill-amber" />
                       ))}
                     </div>
-                    
+
                     <p className="text-lg text-foreground font-medium leading-relaxed mb-8 relative z-10">
                       "{testimonial.quote}"
                     </p>
-                    
+
                     <div className="mt-auto">
                       <p className="font-display font-bold text-foreground text-lg">{testimonial.author}</p>
                       <p className="text-sm text-primary font-semibold tracking-wide uppercase mt-1">{testimonial.role}</p>
