@@ -173,7 +173,9 @@ function ShopPage() {
                       <CarouselContent>
                         {product.images.map((img, i) => (
                           <CarouselItem key={i} className="flex justify-center items-center">
-                            <img src={img} alt={`${product.title} view ${i + 1}`} className="w-48 aspect-square object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                            <div className="img-protect w-48 aspect-square rounded-xl">
+                              <img src={img} alt={`${product.title} view ${i + 1}`} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                            </div>
                           </CarouselItem>
                         ))}
                       </CarouselContent>

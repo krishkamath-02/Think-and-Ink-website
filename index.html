@@ -41,6 +41,23 @@
     gtag('js', new Date());
     gtag('config', 'G-V4Z1STNBZF', { page_path: window.location.pathname });
   </script>
+  <!-- Image Protection -->
+  <script>
+    // Disable right-click on images
+    document.addEventListener('contextmenu', function (e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+    // Disable drag-and-drop of images
+    document.addEventListener('dragstart', function (e) {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+    // Disable Ctrl+S / Cmd+S (save page)
+    document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+      }
+    });
+  </script>
 </head>
 
 <body>

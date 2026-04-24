@@ -98,13 +98,15 @@ function Index() {
                 <div className="absolute -top-5 -left-3 bg-primary text-primary-foreground rounded-xl px-3 py-1 shadow-lg text-[10px] font-bold uppercase tracking-wide z-10">
                   🌸 Girl Edition
                 </div>
-                <img
-                  src={coverGirl}
-                  alt="Brave Curious Me — Girl Edition journal 3D mockup"
-                  className="relative w-36 md:w-52 drop-shadow-2xl animate-float"
-                  width={208}
-                  height={208}
-                />
+                <div className="img-protect w-36 md:w-52 rounded-2xl">
+                  <img
+                    src={coverGirl}
+                    alt="Brave Curious Me — Girl Edition journal 3D mockup"
+                    className="relative w-full drop-shadow-2xl animate-float"
+                    width={208}
+                    height={208}
+                  />
+                </div>
               </div>
 
               {/* Boy Edition */}
@@ -112,13 +114,15 @@ function Index() {
                 <div className="absolute -top-5 -right-3 bg-teal text-teal-foreground rounded-xl px-3 py-1 shadow-lg text-[10px] font-bold uppercase tracking-wide z-10">
                   🚀 Boy Edition
                 </div>
-                <img
-                  src={coverBoy}
-                  alt="Brave Curious Me — Boy Edition journal 3D mockup"
-                  className="relative w-36 md:w-52 drop-shadow-2xl animate-float animation-delay-400 rounded-lg"
-                  width={208}
-                  height={208}
-                />
+                <div className="img-protect w-36 md:w-52 rounded-2xl">
+                  <img
+                    src={coverBoy}
+                    alt="Brave Curious Me — Boy Edition journal 3D mockup"
+                    className="relative w-full drop-shadow-2xl animate-float animation-delay-400 rounded-lg"
+                    width={208}
+                    height={208}
+                  />
+                </div>
                 <div className="absolute -bottom-4 -right-4 bg-amber text-amber-foreground rounded-2xl px-3 py-1.5 shadow-lg animate-sparkle animation-delay-600 z-10">
                   <Star className="w-4 h-4 inline mr-1" />
                   <span className="text-xs font-bold">Just Launched!</span>
@@ -180,14 +184,16 @@ function Index() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <Reveal direction="right" className="flex-1 flex justify-center">
-              <img
-                src={journalIllustration}
-                alt="Think and Ink journal"
-                className="w-64 md:w-80 animate-float animation-delay-200"
-                loading="lazy"
-                width={800}
-                height={800}
-              />
+              <div className="img-protect w-64 md:w-80 rounded-2xl">
+                <img
+                  src={journalIllustration}
+                  alt="Think and Ink journal"
+                  className="w-full animate-float animation-delay-200"
+                  loading="lazy"
+                  width={800}
+                  height={800}
+                />
+              </div>
             </Reveal>
             <Reveal direction="left" delay={0.2} className="flex-1">
               <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">More Than a Journal</h2>
@@ -305,12 +311,14 @@ function Index() {
                           transformStyle: "preserve-3d"
                         }}
                       >
-                        <img
-                          src={img}
-                          alt={`${activeEdition} edition page ${i + 1}`}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
+                        <div className="img-protect w-full h-full">
+                          <img
+                            src={img}
+                            alt={`${activeEdition} edition page ${i + 1}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
                         {/* Shading effect to simulate 3D lighting */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-white/10 pointer-events-none" />
                         {!isMiddle && (
