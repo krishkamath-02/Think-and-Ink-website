@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe, PenTool, Lightbulb } from "lucide-react";
+import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe, PenTool, Lightbulb, Heart } from "lucide-react";
 import coverFull from "@/assets/cover-girl-edition.png";
 import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
@@ -30,6 +30,14 @@ import boyEdition5 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 
 import boyEdition6 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16 (1).jpeg";
 import boyEdition7 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16 (2).jpeg";
 import boyEdition8 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16.jpeg";
+
+// Mother's Day Edition
+import mothersDayCover from "@/assets/mothers-day/mothers-day-journal-regular.png";
+import mothersDayCustomizedCover from "@/assets/mothers-day/mothers-day-journal-custom.png";
+import mothersDayInside1 from "@/assets/mothers-day/mdj-internal-1.jpg";
+import mothersDayInside2 from "@/assets/mothers-day/mdj-internal-2.jpg";
+import mothersDayInside3 from "@/assets/mothers-day/mdj-internal-3.jpg";
+import mothersDayInside4 from "@/assets/mothers-day/mdj-internal-4.jpg";
 
 function ReactionButtons({ initialPen, initialBulb }: { initialPen: number, initialBulb: number }) {
   const [pen, setPen] = useState({ count: initialPen, active: false });
@@ -109,6 +117,44 @@ export const Route = createFileRoute("/shop")({
                   "availability": "https://schema.org/InStock"
                 }
               }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Product",
+                "name": "Mother's Day Special (Standard)",
+                "description": "A 32-page guided keepsake designed for you to fill in and gift the most important woman in your life.",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Think & Ink"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "INR",
+                  "price": "399",
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Product",
+                "name": "Mother's Day Special (Customized)",
+                "description": "Includes child's name printed on the cover. A 32-page guided keepsake designed for you to fill in and gift the most important woman in your life.",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Think & Ink"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "INR",
+                  "price": "499",
+                  "availability": "https://schema.org/InStock"
+                }
+              }
             }
           ]
         })
@@ -142,6 +188,26 @@ function ShopPage() {
       icon: Flower2,
       penCount: 5,
       bulbCount: 2,
+    },
+    {
+      title: "Mother's Day Special (Standard)",
+      desc: "She deserves more than a card. A 32-page guided keepsake for Mother's Day. Pre-orders close 3rd May.",
+      price: "₹399",
+      badge: "Pre-order",
+      images: [mothersDayCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
+      icon: Heart,
+      penCount: 15,
+      bulbCount: 10,
+    },
+    {
+      title: "Mother's Day Special (Customized)",
+      desc: "Includes child's name printed on the cover. A 32-page guided keepsake for Mother's Day. Pre-orders close 3rd May.",
+      price: "₹499",
+      badge: "Customized",
+      images: [mothersDayCustomizedCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
+      icon: Heart,
+      penCount: 22,
+      bulbCount: 18,
     },
   ];
 

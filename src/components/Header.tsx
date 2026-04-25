@@ -34,6 +34,13 @@ export function Header() {
       badge: "Just Launched",
     },
     {
+      label: "Mother's Day Special",
+      sublabel: "Limited Edition Keepsake",
+      emoji: "💝",
+      href: "/shop",
+      badge: "Limited",
+    },
+    {
       label: "Coming Soon",
       sublabel: "More adventures ahead...",
       emoji: "✨",

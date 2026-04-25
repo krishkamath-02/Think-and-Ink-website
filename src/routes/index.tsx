@@ -3,14 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Lightbulb, TrendingUp, PenLine, Moon, Globe } from "lucide-react";
+import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Lightbulb, TrendingUp, PenLine, Moon, Globe, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-lifestyle.png";
 import coverGirl from "@/assets/product-mockup-3d.png";
 import coverBoy from "@/assets/product-mockup-boy-3d.png";
 import journalIllustration from "@/assets/journal-illustration.png";
+import mothersDayCover from "@/assets/mothers-day/mothers-day-journal-regular.png";
+import mothersDayCustomizedCover from "@/assets/mothers-day/mothers-day-journal-custom.png";
+import mothersDayInside1 from "@/assets/mothers-day/mdj-internal-1.jpg";
+import mothersDayInside2 from "@/assets/mothers-day/mdj-internal-2.jpg";
+import mothersDayInside3 from "@/assets/mothers-day/mdj-internal-3.jpg";
+import mothersDayInside4 from "@/assets/mothers-day/mdj-internal-4.jpg";
 import { Reveal } from "@/components/Reveal";
 import { Testimonials } from "@/components/Testimonials";
+import { OrderModal } from "@/components/OrderModal";
 
 // Interior Pages
 import girlIntro from "@/assets/girl-edition/girl-intro.jpg";
@@ -38,16 +45,24 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [activeEdition, setActiveEdition] = useState<'girl' | 'boy'>('girl');
-  const [currentIndex, setCurrentIndex] = useState(3);
+  const [activeEdition, setActiveEdition] = useState<'girl' | 'boy' | 'mothers-day'>('girl');
+  const [mothersDayCustomized, setMothersDayCustomized] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<{ title: string; price: string } | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(2);
 
   useEffect(() => {
-    setCurrentIndex(3);
+    // Focus on the middle/3rd image (index 2) by default
+    setCurrentIndex(2);
   }, [activeEdition]);
 
-  const girlPages = [girlIntro, girlInside3, girlInside4, girlInside5, girlInside6, girlInside7];
-  const boyPages = [boyIntro, boyInside5, boyInside4, boyInside2, readingCorner, boyInside1];
-  const activePages = activeEdition === 'girl' ? girlPages : boyPages;
+  const girlPages = [girlInside3, girlInside4, girlIntro, girlInside5, girlInside6, girlInside7];
+  const boyPages = [boyInside5, boyInside4, boyIntro, boyInside2, readingCorner, boyInside1];
+  const mothersDayPages = [mothersDayInside1, mothersDayInside2, mothersDayCustomized ? mothersDayCustomizedCover : mothersDayCover, mothersDayInside3, mothersDayInside4];
+
+  const activePages =
+    activeEdition === 'girl' ? girlPages :
+      activeEdition === 'boy' ? boyPages :
+        mothersDayPages;
 
   return (
     <div className="min-h-screen bg-background">
@@ -148,6 +163,133 @@ function Index() {
         </div>
       </section>
 
+      {/* Mother's Day Special */}
+      <section className="py-24 bg-primary/5 relative overflow-hidden">
+        {/* Pre-order Banner */}
+        <div className="absolute top-0 left-0 right-0 bg-amber py-2 text-center z-20">
+          <p className="text-[10px] md:text-xs font-black text-amber-foreground uppercase tracking-[0.2em] flex items-center justify-center gap-4">
+            <span>✨ Limited Edition</span>
+            <span className="w-1 h-1 rounded-full bg-amber-foreground/30" />
+            <span>Pre-orders Only</span>
+            <span className="w-1 h-1 rounded-full bg-amber-foreground/30" />
+            <span>Closes 3rd May 2026</span>
+          </p>
+        </div>
+
+        <div className="absolute top-0 right-0 w-64 h-64 bg-amber/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 blur-3xl rounded-full translate-y-1/2 -translate-x-1/2" />
+
+        <div className="mx-auto max-w-7xl px-6 pt-8">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <Reveal direction="right" className="flex-1 order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber/10 px-4 py-1.5 mb-6">
+                <Star className="w-4 h-4 text-amber fill-amber" />
+                <span className="text-xs font-bold text-amber uppercase tracking-wider">Pre-orders Open</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
+                She deserves <span className="text-primary italic">more</span> than a card.
+              </h2>
+              <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+                The Think & Ink Mother's Day Journal is a 32-page guided keepsake designed for you to fill in and gift the most important woman in your life.
+              </p>
+              <div className="mt-8 space-y-6">
+                {[
+                  { title: "Prompts & Letters", desc: "Thoughtful starters to help you express what words sometimes can't." },
+                  { title: "Memory Captures", desc: "Spaces to stick photos and write about your favorite shared moments." },
+                  { title: "Personal Drawing Pages", desc: "Because a child's art is a mother's greatest treasure." }
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm border border-border/50 flex items-center justify-center shrink-0">
+                      <Heart className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-foreground">{item.title}</h4>
+                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-10">
+                {/* Customization Toggle */}
+                <div className="flex items-center gap-3 mb-8 bg-white/50 backdrop-blur-sm border border-border/50 rounded-2xl p-2 w-fit">
+                  <button
+                    onClick={() => setMothersDayCustomized(false)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${!mothersDayCustomized ? 'bg-primary text-primary-foreground shadow-lg' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    Standard
+                  </button>
+                  <button
+                    onClick={() => setMothersDayCustomized(true)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${mothersDayCustomized ? 'bg-amber text-amber-foreground shadow-lg' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    Customized
+                  </button>
+                </div>
+
+                <div className="bg-amber/10 border border-amber/30 rounded-2xl p-4 mb-6">
+                  <p className="text-sm font-bold text-amber-900 flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    Last date for pre-orders: 3rd May 2026
+                  </p>
+                  {mothersDayCustomized && (
+                    <p className="mt-2 text-xs text-amber-800/80 italic">
+                      * Customized version includes Mother's name printed on the cover.
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="w-full sm:w-auto"
+                    onClick={() => setSelectedProduct({
+                      title: `Mother's Day Special Edition (${mothersDayCustomized ? "Customized" : "Standard"})`,
+                      price: mothersDayCustomized ? "₹499" : "₹399"
+                    })}
+                  >
+                    Pre-order {mothersDayCustomized ? "Customized" : "Standard"} Journal
+                  </Button>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 border border-border/50 backdrop-blur-sm">
+                    <span className="text-sm font-bold text-foreground">₹{mothersDayCustomized ? "499" : "399"}</span>
+                    {mothersDayCustomized && <span className="text-xs text-muted-foreground line-through">₹599</span>}
+                    {!mothersDayCustomized && <span className="text-xs text-muted-foreground line-through">₹499</span>}
+                  </div>
+                </div>
+              </div>
+              <p className="mt-6 text-sm italic text-muted-foreground">
+                "Because no matter how old you are, you're always your mum's child." 🥹
+              </p>
+            </Reveal>
+
+            <Reveal direction="left" delay={0.2} className="flex-1 order-1 lg:order-2 flex justify-center">
+              <div className="relative group">
+                {/* Decorative elements */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-amber/20 to-primary/20 rounded-[2rem] blur-2xl group-hover:blur-3xl transition-all" />
+
+                <div className="relative img-protect w-72 md:w-[400px] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
+                  <img
+                    src={mothersDayCustomized ? mothersDayCustomizedCover : mothersDayCover}
+                    alt={mothersDayCustomized ? "Customized Mother's Day Journal" : "Standard Mother's Day Journal"}
+                    key={mothersDayCustomized ? "customized" : "standard"}
+                    className="w-full transition-all duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+
+                {/* Floating badge */}
+                <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl border border-border/50 animate-float">
+                  <div className="flex flex-col items-center">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Keepsake</span>
+                    <span className="text-2xl font-black text-primary">32</span>
+                    <span className="text-[10px] font-bold text-muted-foreground">PAGES</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* Features / Promise */}
       <section className="py-24 bg-warm">
         <div className="mx-auto max-w-7xl px-6">
@@ -234,26 +376,32 @@ function Index() {
 
           {/* Tab Switcher */}
           <Reveal delay={0.1} className="flex justify-center mb-16">
-            <div className="inline-flex bg-background p-1.5 rounded-full border border-border/50 shadow-sm relative w-[280px]">
+            <div className="inline-flex bg-background p-1.5 rounded-full border border-border/50 shadow-sm relative w-[360px] md:w-[420px]">
               <div
                 className="absolute inset-y-1.5 rounded-full transition-all duration-300 ease-out"
                 style={{
-                  width: 'calc(50% - 6px)',
-                  left: activeEdition === 'girl' ? '6px' : '50%',
-                  backgroundColor: activeEdition === 'girl' ? 'hsl(var(--primary) / 0.1)' : 'hsl(var(--teal) / 0.1)',
+                  width: 'calc(33.333% - 6px)',
+                  left: activeEdition === 'girl' ? '6px' : activeEdition === 'boy' ? '33.333%' : '66.666%',
+                  backgroundColor: activeEdition === 'girl' ? 'hsl(var(--primary) / 0.1)' : activeEdition === 'boy' ? 'hsl(var(--teal) / 0.1)' : 'hsl(var(--amber) / 0.1)',
                 }}
               />
               <button
                 onClick={() => setActiveEdition('girl')}
-                className={`flex-1 relative py-2.5 rounded-full text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'girl' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`flex-1 relative py-2.5 rounded-full text-[10px] md:text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'girl' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
               >
-                🌸 Girl Edition
+                🌸 Girl
               </button>
               <button
                 onClick={() => setActiveEdition('boy')}
-                className={`flex-1 relative py-2.5 rounded-full text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'boy' ? 'text-teal' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`flex-1 relative py-2.5 rounded-full text-[10px] md:text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'boy' ? 'text-teal' : 'text-muted-foreground hover:text-foreground'}`}
               >
-                🚀 Boy Edition
+                🚀 Boy
+              </button>
+              <button
+                onClick={() => setActiveEdition('mothers-day')}
+                className={`flex-1 relative py-2.5 rounded-full text-[10px] md:text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'mothers-day' ? 'text-amber-600' : 'text-muted-foreground hover:text-foreground'}`}
+              >
+                💝 Mother's Day
               </button>
             </div>
           </Reveal>
@@ -364,6 +512,7 @@ function Index() {
 
       {/* Social Proof / Testimonials */}
       <Testimonials />
+
 
       {/* ===== WHY JOURNALING? ===== */}
       <section className="py-28 bg-warm overflow-hidden">
@@ -521,6 +670,14 @@ function Index() {
       </section>
 
       <Footer />
+
+      {/* Order Modal */}
+      {selectedProduct && (
+        <OrderModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 }
