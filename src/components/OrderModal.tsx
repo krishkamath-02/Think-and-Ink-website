@@ -3,7 +3,7 @@ import { X, MessageCircle, Loader2, CheckCircle, MapPin, User, Phone, Hash, Pack
 import { Button } from "@/components/ui/button";
 
 // ─── PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ───────────────────────────
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwpHxDL1fl_goYjfw1lo8TOoQfRln4Ki0SNvNx6thXC1YI6yawNLlhZo4R_Ag_Pjmt3/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-DcbofEE2r-a1ynAl5YRZ8c5aPUfLKA-67lbwnNcD7u8Ga9gjq47U3vc9f6ffuLmu/exec";
 // ──────────────────────────────────────────────────────────────────────────────
 
 const WHATSAPP_NUMBER = "917822845048";
