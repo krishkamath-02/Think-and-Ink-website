@@ -119,6 +119,7 @@ export function Header() {
           </div>
 
           <Link to="/shop" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Shop</Link>
+          <Link to="/parents-corner" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Parent's Corner</Link>
           <Link to="/faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>FAQ</Link>
           <Link to="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Contact</Link>
         </nav>
@@ -168,6 +169,7 @@ export function Header() {
           </div>
 
           <Link to="/shop" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Shop</Link>
+          <Link to="/parents-corner" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Parent's Corner</Link>
           <Link to="/faq" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">FAQ</Link>
           <Link to="/contact" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Contact</Link>
           <Link to="/shop" onClick={() => setOpen(false)} className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground w-full mt-2">

@@ -5,6 +5,7 @@ import { FEATURES } from "@/config/features";
 
 // ─── PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ───────────────────────────
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-DcbofEE2r-a1ynAl5YRZ8c5aPUfLKA-67lbwnNcD7u8Ga9gjq47U3vc9f6ffuLmu/exec";
+const SECRET_WEB_KEY = "TNI-SEC-7822-XP91"; // MUST MATCH GOOGLE APPS SCRIPT
 // ──────────────────────────────────────────────────────────────────────────────
 
 const WHATSAPP_NUMBER = "917822845048";
@@ -133,6 +134,7 @@ export function OrderModal({ product, onClose }: OrderModalProps) {
     if (upsells.siblingBundle) additionsList.push("Sibling Bundle");
 
     const payload = {
+      authKey: SECRET_WEB_KEY,
       timestamp: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
       orderId: orderId,
       name: `${form.firstName} ${form.lastName}`,
