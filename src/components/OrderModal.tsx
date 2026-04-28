@@ -14,7 +14,8 @@ interface OrderModalProps {
 }
 
 interface FormData {
-  buyerName: string;
+  firstName: string;
+  lastName: string;
   childName: string;
   phone: string;
   address: string;
@@ -25,7 +26,8 @@ interface FormData {
 }
 
 const emptyForm: FormData = {
-  buyerName: "",
+  firstName: "",
+  lastName: "",
   childName: "",
   phone: "",
   address: "",
@@ -57,7 +59,7 @@ export function OrderModal({ product, onClose }: OrderModalProps) {
     `*Total Amount:* ₹${parseInt(product.price.replace("₹", "")) * parseInt(f.quantity)}\n` +
     `*━━━━━━━━━━━━━━━━━━━━━*\n\n` +
     `*📍 SHIPPING DETAILS*\n` +
-    `*Buyer's Name:* ${f.buyerName}\n` +
+    `*Buyer's Name:* ${f.firstName} ${f.lastName}\n` +
     `*Child's Name:* ${f.childName}\n` +
     `*Phone:* ${f.phone}\n` +
     `*Address:* ${f.address}, ${f.city}, ${f.state} – ${f.pincode}\n\n` +
@@ -73,7 +75,7 @@ export function OrderModal({ product, onClose }: OrderModalProps) {
     const payload = {
       timestamp: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
       orderId: orderId,
-      name: form.buyerName,
+      name: `${form.firstName} ${form.lastName}`,
       childName: form.childName,
       phone: form.phone,
       address: form.address,
@@ -178,36 +180,51 @@ export function OrderModal({ product, onClose }: OrderModalProps) {
         ) : (
           <form onSubmit={handleSubmit} className="px-7 py-6 space-y-5">
 
-            {/* Names */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="flex items-center gap-1.5 text-sm font-semibold text-foreground mb-2">
-                  <User className="w-3.5 h-3.5 text-primary" /> Buyer's Name
+                  <User className="w-3.5 h-3.5 text-primary" /> First Name
                 </label>
                 <input
                   type="text"
-                  name="buyerName"
+                  name="firstName"
                   required
-                  value={form.buyerName}
+                  value={form.firstName}
                   onChange={handleChange}
-                  placeholder="e.g. Priya"
+                  placeholder="Priya"
                   className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                 />
               </div>
               <div>
                 <label className="flex items-center gap-1.5 text-sm font-semibold text-foreground mb-2">
-                  <Heart className="w-3.5 h-3.5 text-primary" /> Child's Name
+                  <User className="w-3.5 h-3.5 text-primary" /> Last Name
                 </label>
                 <input
                   type="text"
-                  name="childName"
+                  name="lastName"
                   required
-                  value={form.childName}
+                  value={form.lastName}
                   onChange={handleChange}
-                  placeholder="e.g. Rohan"
+                  placeholder="Sharma"
                   className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
                 />
               </div>
+            </div>
+
+            {/* Child Name */}
+            <div>
+              <label className="flex items-center gap-1.5 text-sm font-semibold text-foreground mb-2">
+                <Heart className="w-3.5 h-3.5 text-primary" /> Child's Name
+              </label>
+              <input
+                type="text"
+                name="childName"
+                required
+                value={form.childName}
+                onChange={handleChange}
+                placeholder="e.g. Rohan"
+                className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+              />
             </div>
 
             {/* Phone */}
