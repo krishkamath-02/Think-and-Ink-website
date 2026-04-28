@@ -2,11 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe, PenTool, Lightbulb, Heart } from "lucide-react";
+import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard, RefreshCw, IndianRupee, Clock, Globe, PenTool, Lightbulb, Heart, Download, Layout } from "lucide-react";
 import coverFull from "@/assets/cover-girl-edition.png";
 import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
 import { useState } from "react";
+import { FEATURES } from "@/config/features";
 import {
   Carousel,
   CarouselContent,
@@ -211,6 +212,25 @@ function ShopPage() {
     },
   ];
 
+  const digitalProducts = [
+    {
+      title: "The Courage Challenge",
+      desc: "A 7-day mini-journal focused on building bravery and trying new things. Perfect for home printing.",
+      price: "₹99",
+      badge: "Instant Download",
+      images: [girlEdition3], // Placeholder
+      icon: Layout,
+    },
+    {
+      title: "Expression Sheet Bundle",
+      desc: "A collection of 5 best-selling guided prompts from our physical journals in digital format.",
+      price: "₹49",
+      badge: "Digital Pack",
+      images: [boyEdition4], // Placeholder
+      icon: Download,
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -301,6 +321,57 @@ function ShopPage() {
           </div>
         </div>
       </section>
+
+      {/* Digital Library Section */}
+      {FEATURES.SHOW_DIGITAL_LIBRARY && (
+        <section className="py-24 bg-primary/5">
+          <div className="mx-auto max-w-7xl px-6">
+            <Reveal className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 mb-6">
+                <Download className="w-4 h-4 text-primary" />
+                <span className="text-xs font-semibold text-primary uppercase tracking-widest">Digital Library</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">Printable Mini-Journals</h2>
+              <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+                Get instant access to our curated guided sheets and challenges. Perfect for printing at home.
+              </p>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-4xl mx-auto">
+              {digitalProducts.map((product, i) => (
+                <Reveal key={product.title} delay={i * 0.1}>
+                  <div className="group bg-card rounded-3xl overflow-hidden shadow-sm border border-border/50 flex flex-col sm:flex-row h-full hover:shadow-xl transition-all duration-300">
+                    <div className="sm:w-2/5 aspect-square bg-warm p-6 flex items-center justify-center">
+                      <div className="img-protect w-full h-full">
+                        <img src={product.images[0]} alt={product.title} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+                      </div>
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 mb-2">
+                        <product.icon className="w-4 h-4 text-primary" />
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-wider bg-primary/5 px-2 py-0.5 rounded-full">{product.badge}</span>
+                      </div>
+                      <h3 className="font-display text-lg font-bold text-foreground">{product.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{product.desc}</p>
+                      <div className="mt-6 flex items-center justify-between">
+                        <span className="font-display text-xl font-bold text-primary">{product.price}</span>
+                        <Button
+                          variant="hero"
+                          size="sm"
+                          onClick={() => setSelectedProduct({ title: product.title, price: product.price })}
+                          className="flex items-center gap-1.5"
+                        >
+                          Get Access
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Shipping & Payment */}
       <section className="py-20 bg-warm">

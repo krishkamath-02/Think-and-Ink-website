@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Lightbulb, TrendingUp, PenLine, Moon, Globe, Clock } from "lucide-react";
+import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Lightbulb, TrendingUp, PenLine, Moon, Globe, Clock, Instagram, Newspaper, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-lifestyle.png";
 import coverGirl from "@/assets/product-mockup-3d.png";
@@ -18,6 +18,7 @@ import mothersDayInside4 from "@/assets/mothers-day/mdj-internal-4.jpg";
 import { Reveal } from "@/components/Reveal";
 import { Testimonials } from "@/components/Testimonials";
 import { OrderModal } from "@/components/OrderModal";
+import { FEATURES } from "@/config/features";
 
 // Interior Pages
 import girlIntro from "@/assets/girl-edition/girl-intro.jpg";
@@ -512,6 +513,107 @@ function Index() {
 
       {/* Social Proof / Testimonials */}
       <Testimonials />
+
+      {/* Wall of Love - Instagram Style */}
+      {FEATURES.SHOW_INSTAGRAM_WALL && (
+        <section className="py-24 bg-white overflow-hidden">
+          <div className="mx-auto max-w-7xl px-6">
+            <Reveal className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 rounded-full bg-pink-50 px-4 py-1.5 mb-6">
+                <Instagram className="w-4 h-4 text-pink-500" />
+                <span className="text-xs font-semibold text-pink-600 uppercase tracking-widest">@thinkandink.in</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">Wall of Love</h2>
+              <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+                Real moments from real parents. Tag us on Instagram to be featured!
+              </p>
+            </Reveal>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <Reveal key={i} delay={i * 0.1} className="aspect-square relative group cursor-pointer overflow-hidden rounded-2xl">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-10" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                    <Instagram className="w-8 h-8 text-white" />
+                  </div>
+                  {/* We'll use placeholders for now, but these would be real user-generated content images */}
+                  <div className="w-full h-full bg-warm">
+                    {/* Placeholders for UGC */}
+                    <div className="w-full h-full flex items-center justify-center text-primary/20 italic text-xs p-4 text-center">
+                      Moments shared by our community ❤️
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                Join the community on Instagram <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Parent's Corner - Blog Teaser */}
+      <section className="py-24 bg-warm">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+            <Reveal className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-4 py-1.5 mb-6">
+                <Newspaper className="w-4 h-4 text-teal" />
+                <span className="text-xs font-semibold text-teal uppercase tracking-widest">The Parent's Corner</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">Insights for Raising Mindful Kids</h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <Button variant="outline" className="hidden md:flex">View All Articles</Button>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { 
+                title: "5 Ways to Help Your Child Express Emotions", 
+                category: "Emotional Health",
+                readTime: "5 min read",
+                desc: "Practical tips to create a safe space for big feelings at home."
+              },
+              { 
+                title: "Why Journaling is Better than Screen Time", 
+                category: "Development",
+                readTime: "4 min read",
+                desc: "How a physical journal activates the brain differently than a tablet."
+              },
+              { 
+                title: "Building a Daily Reflection Habit", 
+                category: "Habits",
+                readTime: "6 min read",
+                desc: "Setting up a simple 10-minute routine that sticks for years."
+              }
+            ].map((article, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <div className="group bg-card rounded-3xl p-8 border border-border/50 hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest mb-4">{article.category}</span>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">{article.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">{article.desc}</p>
+                  <div className="flex items-center justify-between pt-6 border-t border-border/50">
+                    <span className="text-xs text-muted-foreground">{article.readTime}</span>
+                    <button className="text-sm font-bold text-primary flex items-center gap-1 group/btn">
+                      Read More <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center md:hidden">
+            <Button variant="outline" className="w-full">View All Articles</Button>
+          </div>
+        </div>
+      </section>
 
 
       {/* ===== WHY JOURNALING? ===== */}
