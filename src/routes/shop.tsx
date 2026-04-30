@@ -8,6 +8,7 @@ import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
 import { useState } from "react";
 import { FEATURES } from "@/config/features";
+import { Plus, Minus, Trash2, Library, X } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -166,7 +167,20 @@ export const Route = createFileRoute("/shop")({
 });
 
 function ShopPage() {
-  const [selectedProduct, setSelectedProduct] = useState<{ title: string; price: string } | null>(null);
+  const [shelf, setShelf] = useState<{ title: string; price: string; quantity: number; image: string }[]>([]);
+  const [isShelfOpen, setIsShelfOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  const addToShelf = (product: { title: string; price: string; image: string }) => {
+    setShelf(prev => {
+      const existing = prev.find(p => p.title === product.title);
+      if (existing) {
+        return prev.map(p => p.title === product.title ? { ...p, quantity: p.quantity + 1 } : p);
+      }
+      return [...prev, { title: product.title, price: product.price, quantity: 1, image: product.image }];
+    });
+    setIsShelfOpen(true);
+  };
 
   const products = [
     {
@@ -293,11 +307,11 @@ function ShopPage() {
                           <Button
                             variant="hero"
                             size="sm"
-                            onClick={() => setSelectedProduct({ title: product.title, price: product.price })}
+                            onClick={() => addToShelf({ title: product.title, price: product.price, image: product.images[0] })}
                             className="flex items-center gap-1.5 w-full"
                           >
-                            <MessageCircle className="w-4 h-4" />
-                            Order via WhatsApp
+                            <Library className="w-4 h-4" />
+                            Add to Shelf
                           </Button>
                           {product.amazonLink && (
                             <a href={product.amazonLink} target="_blank" rel="noopener noreferrer" className="w-full">
@@ -358,10 +372,11 @@ function ShopPage() {
                         <Button
                           variant="hero"
                           size="sm"
-                          onClick={() => setSelectedProduct({ title: product.title, price: product.price })}
+                          onClick={() => addToShelf({ title: product.title, price: product.price, image: product.images[0] })}
                           className="flex items-center gap-1.5"
                         >
-                          Get Access
+                          <Library className="w-4 h-4" />
+                          Add to Shelf
                         </Button>
                       </div>
                     </div>
@@ -463,7 +478,7 @@ function ShopPage() {
         href={`https://wa.me/917822845048?text=${encodeURIComponent("Hi Think & Ink! 👋 I have a question about your journals.")}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50 flex items-center justify-center group"
+        className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-40 flex items-center justify-center group"
         aria-label="Contact us on WhatsApp"
       >
         <MessageCircle className="w-7 h-7" />
@@ -472,11 +487,70 @@ function ShopPage() {
         </span>
       </a>
 
+      {/* Shelf Widget */}
+      {shelf.length > 0 && (
+        <div className="fixed bottom-6 left-6 z-50">
+          {!isShelfOpen && (
+            <button 
+              onClick={() => setIsShelfOpen(true)}
+              className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-2xl hover:scale-105 transition-all flex items-center gap-3 font-display font-bold"
+            >
+              <Library className="w-6 h-6" />
+              My Shelf ({shelf.reduce((acc, item) => acc + item.quantity, 0)})
+            </button>
+          )}
+          
+          {isShelfOpen && (
+            <div className="bg-card w-80 rounded-3xl shadow-2xl border border-border/50 overflow-hidden flex flex-col animate-in slide-in-from-bottom-5">
+              <div className="bg-primary/10 px-5 py-4 flex items-center justify-between">
+                <h3 className="font-display font-bold text-primary flex items-center gap-2">
+                  <Library className="w-5 h-5" /> My Book Shelf
+                </h3>
+                <button onClick={() => setIsShelfOpen(false)} className="text-primary/70 hover:text-primary p-1">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-4 max-h-60 overflow-y-auto space-y-4">
+                {shelf.map((item, idx) => (
+                  <div key={idx} className="flex gap-3 items-center">
+                    <img src={item.image} alt={item.title} className="w-12 h-12 rounded-lg object-cover bg-warm" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-foreground truncate">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.price}</p>
+                    </div>
+                    <div className="flex items-center gap-2 bg-secondary/50 rounded-full px-2 py-1">
+                      <button onClick={() => setShelf(prev => prev.map(p => p.title === item.title ? { ...p, quantity: Math.max(0, p.quantity - 1) } : p).filter(p => p.quantity > 0))} className="text-muted-foreground hover:text-foreground">
+                        <Minus className="w-3 h-3" />
+                      </button>
+                      <span className="text-xs font-bold w-4 text-center">{item.quantity}</span>
+                      <button onClick={() => setShelf(prev => prev.map(p => p.title === item.title ? { ...p, quantity: p.quantity + 1 } : p))} className="text-muted-foreground hover:text-foreground">
+                        <Plus className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="p-4 bg-secondary/20 border-t border-border/30">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-sm font-semibold text-muted-foreground">Total</span>
+                  <span className="font-display text-lg font-bold text-primary">
+                    ₹{shelf.reduce((acc, item) => acc + parseInt(item.price.replace("₹", "")) * item.quantity, 0)}
+                  </span>
+                </div>
+                <Button variant="hero" className="w-full" onClick={() => { setIsShelfOpen(false); setIsCheckoutOpen(true); }}>
+                  Place Order
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Order Modal */}
-      {selectedProduct && (
+      {isCheckoutOpen && shelf.length > 0 && (
         <OrderModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
+          shelf={shelf}
+          onClose={() => setIsCheckoutOpen(false)}
         />
       )}
     </div>

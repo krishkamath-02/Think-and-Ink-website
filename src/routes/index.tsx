@@ -718,7 +718,7 @@ function Index() {
       {/* Order Modal */}
       {selectedProduct && (
         <OrderModal
-          product={selectedProduct}
+          shelf={[{ ...selectedProduct, quantity: 1 }]}
           onClose={() => setSelectedProduct(null)}
         />
       )}
