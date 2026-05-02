@@ -6,9 +6,10 @@ import { ShoppingBag, Star, BookOpen, Flower2, MessageCircle, Truck, CreditCard,
 import coverFull from "@/assets/cover-girl-edition.png";
 import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
+import { BulkOrderModal } from "@/components/BulkOrderModal";
 import { useState } from "react";
 import { FEATURES } from "@/config/features";
-import { Plus, Minus, Trash2, Library, X } from "lucide-react";
+import { Plus, Minus, Trash2, Library, X, PackageOpen } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -170,6 +171,7 @@ function ShopPage() {
   const [shelf, setShelf] = useState<{ title: string; price: string; quantity: number; image: string }[]>([]);
   const [isShelfOpen, setIsShelfOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isBulkOrderOpen, setIsBulkOrderOpen] = useState(false);
 
   const addToShelf = (product: { title: string; price: string; image: string }) => {
     setShelf(prev => {
@@ -333,6 +335,34 @@ function ShopPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Bulk Order CTA Banner */}
+      <section className="py-12 bg-amber/10 border-y border-amber/20">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal className="flex flex-col md:flex-row items-center justify-between gap-8 bg-white/60 backdrop-blur-md p-8 md:p-10 rounded-[2rem] shadow-sm border border-border/50">
+            <div className="flex-1 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber/20 px-4 py-1.5 mb-4">
+                <PackageOpen className="w-4 h-4 text-amber-900" />
+                <span className="text-xs font-bold text-amber-900 uppercase tracking-widest">Special Occasions</span>
+              </div>
+              <h2 className="font-display text-3xl font-bold text-foreground mb-3">Planning a party or an event?</h2>
+              <p className="text-muted-foreground text-lg max-w-2xl">
+                Get special pricing for bulk orders! Perfect for return gifts, school workshops, or community events.
+              </p>
+            </div>
+            <div className="shrink-0 w-full md:w-auto">
+              <Button 
+                variant="hero" 
+                size="lg" 
+                onClick={() => setIsBulkOrderOpen(true)}
+                className="w-full md:w-auto shadow-xl hover:shadow-2xl transition-all"
+              >
+                Inquire Bulk Pricing
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -551,6 +581,13 @@ function ShopPage() {
         <OrderModal
           shelf={shelf}
           onClose={() => setIsCheckoutOpen(false)}
+        />
+      )}
+
+      {/* Bulk Order Modal */}
+      {isBulkOrderOpen && (
+        <BulkOrderModal
+          onClose={() => setIsBulkOrderOpen(false)}
         />
       )}
     </div>
