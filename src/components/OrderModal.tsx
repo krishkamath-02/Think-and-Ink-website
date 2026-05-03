@@ -146,6 +146,10 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
                 console.error("Failed to log to Google Sheets", e);
               }
 
+              const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                buildWhatsAppMessage(form, orderId) + `\n\n*Payment ID:* ${response.razorpay_payment_id}\n*Razorpay Order ID:* ${response.razorpay_order_id}`
+              )}`;
+              setWhatsAppUrl(url);
               setStatus("success");
             } else {
               setErrorMsg("Payment verification failed. Please contact support.");
