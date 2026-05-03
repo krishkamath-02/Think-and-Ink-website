@@ -36,6 +36,7 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error("Create Order Error:", err);
-    return res.status(500).json({ error: err.message || 'Internal Server Error' });
+    const errorMsg = err.error?.description || err.message || 'Internal Server Error';
+    return res.status(500).json({ error: errorMsg });
   }
 }
