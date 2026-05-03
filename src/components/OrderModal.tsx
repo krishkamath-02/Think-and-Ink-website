@@ -91,7 +91,7 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
   const currentHour = new Date().getHours();
   const isBefore4PM = currentHour < 16;
 
-  const handlePayment = async (orderId: string) => {
+  const handlePayment = async (orderId: string, payload: any) => {
     const total = calculateTotal();
 
     try {
@@ -130,10 +130,22 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
             const verifyData = await verifyRes.json();
             
             if (verifyRes.ok && verifyData.success) {
-              const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                buildWhatsAppMessage(form, orderId) + `\n\n*Payment ID:* ${response.razorpay_payment_id}\n*Razorpay Order ID:* ${response.razorpay_order_id}`
-              )}`;
-              setWhatsAppUrl(url);
+              // 3. Log the successful order to Google Apps Script
+              try {
+                await fetch(APPS_SCRIPT_URL, {
+                  method: "POST",
+                  mode: "no-cors",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    ...payload,
+                    paymentMethod: "Razorpay (Paid)",
+                    razorpayPaymentId: response.razorpay_payment_id
+                  }),
+                });
+              } catch (e) {
+                console.error("Failed to log to Google Sheets", e);
+              }
+
               setStatus("success");
             } else {
               setErrorMsg("Payment verification failed. Please contact support.");
@@ -235,17 +247,19 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     };
 
     try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
       if (method === 'razorpay') {
-        handlePayment(orderId);
+        // Do not log to Google Sheets yet. Wait for successful payment.
+        handlePayment(orderId, payload);
         setStatus("idle");
       } else {
+        // WhatsApp flow: log to Google Sheets immediately
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage(form, orderId))}`;
         setWhatsAppUrl(url);
         setStatus("success");
@@ -283,21 +297,25 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
               <CheckCircle className="w-10 h-10 text-teal" />
             </div>
             <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-              Order Registered! 🎉
+              {whatsAppUrl ? "Order Registered! 🎉" : "Payment Successful! 🎉"}
             </h3>
             <p className="text-muted-foreground leading-relaxed max-w-sm mb-8">
-              Click below to complete your payment on WhatsApp or share the confirmation.
+              {whatsAppUrl 
+                ? "Click below to complete your payment on WhatsApp or share the confirmation."
+                : "Your order has been placed successfully and sent to our shipping partner."}
             </p>
-            <Button
-              variant="hero"
-              size="lg"
-              className="w-full text-base mb-3"
-              onClick={() => window.open(whatsAppUrl, "_blank")}
-            >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Open WhatsApp
-            </Button>
-            <button onClick={onClose} className="text-sm text-muted-foreground">Close</button>
+            {whatsAppUrl && (
+              <Button
+                variant="hero"
+                size="lg"
+                className="w-full text-base mb-3"
+                onClick={() => window.open(whatsAppUrl, "_blank")}
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Open WhatsApp
+              </Button>
+            )}
+            <button onClick={onClose} className="text-sm text-muted-foreground">{whatsAppUrl ? "Close" : "Return to Shop"}</button>
           </div>
         ) : (
           <form className="px-7 py-6 space-y-5">
