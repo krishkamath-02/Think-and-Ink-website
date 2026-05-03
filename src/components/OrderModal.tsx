@@ -91,34 +91,79 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
   const currentHour = new Date().getHours();
   const isBefore4PM = currentHour < 16;
 
-  const handlePayment = (orderId: string) => {
+  const handlePayment = async (orderId: string) => {
     const total = calculateTotal();
 
-    const options = {
-      key: "rzp_test_YOUR_KEY", // User must replace this with their actual key
-      amount: total * 100,
-      currency: "INR",
-      name: "Think & Ink",
-      description: `Payment for ${shelf.length} items`,
-      image: "/favicon.svg",
-      handler: function (response: any) {
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-          buildWhatsAppMessage(form, orderId) + `\n\n*Payment ID:* ${response.razorpay_payment_id}`
-        )}`;
-        setWhatsAppUrl(url);
-        setStatus("success");
-      },
-      prefill: {
-        name: `${form.firstName} ${form.lastName}`,
-        contact: form.phone,
-      },
-      theme: {
-        color: "#E28B84",
-      },
-    };
+    try {
+      // 1. Create Order Backend Call
+      const orderRes = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: total * 100, currency: "INR", receipt: orderId })
+      });
+      
+      const orderData = await orderRes.json();
+      
+      if (!orderRes.ok) throw new Error(orderData.error || "Failed to create order");
 
-    const rzp = new (window as any).Razorpay(options);
-    rzp.open();
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, 
+        amount: orderData.amount,
+        currency: orderData.currency,
+        order_id: orderData.order_id,
+        name: "Think & Ink",
+        description: `Payment for ${shelf.length} items`,
+        image: "/favicon.svg",
+        handler: async function (response: any) {
+          try {
+            // 2. Verify Payment Backend Call
+            const verifyRes = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+            
+            const verifyData = await verifyRes.json();
+            
+            if (verifyRes.ok && verifyData.success) {
+              const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                buildWhatsAppMessage(form, orderId) + `\n\n*Payment ID:* ${response.razorpay_payment_id}\n*Razorpay Order ID:* ${response.razorpay_order_id}`
+              )}`;
+              setWhatsAppUrl(url);
+              setStatus("success");
+            } else {
+              setErrorMsg("Payment verification failed. Please contact support.");
+              setStatus("error");
+            }
+          } catch (err) {
+            setErrorMsg("Verification error. Please contact support.");
+            setStatus("error");
+          }
+        },
+        prefill: {
+          name: `${form.firstName} ${form.lastName}`,
+          email: "thinkandink10@gmail.com",
+          contact: form.phone
+        },
+        theme: {
+          color: "#E28E73",
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', function (response: any) {
+        setErrorMsg("Payment failed: " + response.error.description);
+        setStatus("error");
+      });
+      rzp.open();
+    } catch (err: any) {
+      setErrorMsg(err.message || "Could not initialize payment");
+      setStatus("error");
+    }
   };
 
   const buildWhatsAppMessage = (f: FormData, orderId: string) => {
