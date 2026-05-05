@@ -240,20 +240,15 @@ function Index() {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
-                    variant="hero"
+                    variant="outline"
                     size="lg"
-                    className="w-full sm:w-auto"
-                    onClick={() => setSelectedProduct({
-                      title: `Mother's Day Special Edition (${mothersDayCustomized ? "Customized" : "Standard"})`,
-                      price: mothersDayCustomized ? "₹499" : "₹399"
-                    })}
+                    className="w-full sm:w-auto cursor-not-allowed opacity-50 bg-gray-100 text-gray-500 border-gray-200"
+                    disabled
                   >
-                    Pre-order {mothersDayCustomized ? "Customized" : "Standard"} Journal
+                    Sold Out
                   </Button>
                   <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 border border-border/50 backdrop-blur-sm">
-                    <span className="text-sm font-bold text-foreground">₹{mothersDayCustomized ? "499" : "399"}</span>
-                    {mothersDayCustomized && <span className="text-xs text-muted-foreground line-through">₹599</span>}
-                    {!mothersDayCustomized && <span className="text-xs text-muted-foreground line-through">₹499</span>}
+                    <span className="text-sm font-bold text-foreground">Sold Out</span>
                   </div>
                 </div>
               </div>

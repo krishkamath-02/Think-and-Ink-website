@@ -208,9 +208,9 @@ function ShopPage() {
     },
     {
       title: "Mother's Day Special (Standard)",
-      desc: "She deserves more than a card. A 32-page guided keepsake for Mother's Day. Pre-orders close 3rd May.",
-      price: "₹399",
-      badge: "Pre-order",
+      desc: "She deserves more than a card. A 32-page guided keepsake for Mother's Day.",
+      price: "Sold Out",
+      badge: "Sold Out",
       images: [mothersDayCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
       icon: Heart,
       penCount: 15,
@@ -218,9 +218,9 @@ function ShopPage() {
     },
     {
       title: "Mother's Day Special (Customized)",
-      desc: "Includes child's name printed on the cover. A 32-page guided keepsake for Mother's Day. Pre-orders close 3rd May.",
-      price: "₹499",
-      badge: "Customized",
+      desc: "Includes child's name printed on the cover. A 32-page guided keepsake for Mother's Day.",
+      price: "Sold Out",
+      badge: "Sold Out",
       images: [mothersDayCustomizedCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
       icon: Heart,
       penCount: 22,
@@ -304,7 +304,7 @@ function ShopPage() {
                     <ReactionButtons initialPen={product.penCount} initialBulb={product.bulbCount} />
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <span className="font-display text-xl font-bold text-primary">{product.price}</span>
-                      {product.price !== "Coming Soon" && (
+                      {product.price !== "Coming Soon" && product.price !== "Sold Out" && (
                         <div className="flex flex-col gap-2 w-full sm:w-auto">
                           <Button
                             variant="hero"
