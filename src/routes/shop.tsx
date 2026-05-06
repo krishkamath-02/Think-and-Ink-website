@@ -34,13 +34,40 @@ import boyEdition6 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 
 import boyEdition7 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16 (2).jpeg";
 import boyEdition8 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16.jpeg";
 
-// Mother's Day Edition
-import mothersDayCover from "@/assets/mothers-day/mothers-day-journal-regular.png";
-import mothersDayCustomizedCover from "@/assets/mothers-day/mothers-day-journal-custom.png";
-import mothersDayInside1 from "@/assets/mothers-day/mdj-internal-1.jpg";
-import mothersDayInside2 from "@/assets/mothers-day/mdj-internal-2.jpg";
-import mothersDayInside3 from "@/assets/mothers-day/mdj-internal-3.jpg";
-import mothersDayInside4 from "@/assets/mothers-day/mdj-internal-4.jpg";
+// // Mother's Day Edition
+// import mothersDayCover from "@/assets/mothers-day/mothers-day-journal-regular.png";
+// import mothersDayCustomizedCover from "@/assets/mothers-day/mothers-day-journal-custom.png";
+// import mothersDayInside1 from "@/assets/mothers-day/mdj-internal-1.jpg";
+// import mothersDayInside2 from "@/assets/mothers-day/mdj-internal-2.jpg";
+// import mothersDayInside3 from "@/assets/mothers-day/mdj-internal-3.jpg";
+// import mothersDayInside4 from "@/assets/mothers-day/mdj-internal-4.jpg";
+// import mothersDayCoverView1 from "@/assets/mothers-day/Mothers-day-cover.png";
+
+//Sneek peek celebrating you every day
+import mothersDayCover from "@/assets/celebrating-you/mothers-day-cover.png";
+import mothersDayInside1 from "@/assets/celebrating-you/img1.png";
+import mothersDayInside2 from "@/assets/celebrating-you/img2.png";
+import mothersDayInside3 from "@/assets/celebrating-you/img3.png";
+import mothersDayInside4 from "@/assets/celebrating-you/img4.png";
+import mothersDayInside5 from "@/assets/celebrating-you/img5.png";
+import mothersDayInside6 from "@/assets/celebrating-you/img6.png";
+import mothersDayInside7 from "@/assets/celebrating-you/img7.png";
+import mothersDayInside8 from "@/assets/celebrating-you/img8.png";
+import mothersDayInside9 from "@/assets/celebrating-you/img9.png";
+import mothersDayInside10 from "@/assets/celebrating-you/img10.png";
+
+// Celebrating You Every Day
+import celebratingImg1 from "@/assets/celebrating-you/img1.png";
+import celebratingImg2 from "@/assets/celebrating-you/img2.png";
+import celebratingImg3 from "@/assets/celebrating-you/img3.png";
+import celebratingImg4 from "@/assets/celebrating-you/img4.png";
+import celebratingImg5 from "@/assets/celebrating-you/img5.png";
+import celebratingImg6 from "@/assets/celebrating-you/img6.png";
+import celebratingImg7 from "@/assets/celebrating-you/img7.png";
+import celebratingImg8 from "@/assets/celebrating-you/img8.png";
+import celebratingImg9 from "@/assets/celebrating-you/img9.png";
+import celebratingImg10 from "@/assets/celebrating-you/img10.png";
+import mothersDayCoverView2 from "@/assets/mothers-day/Mothers-day-cover.png";
 
 function ReactionButtons({ initialPen, initialBulb }: { initialPen: number, initialBulb: number }) {
   const [pen, setPen] = useState({ count: initialPen, active: false });
@@ -158,6 +185,25 @@ export const Route = createFileRoute("/shop")({
                   "availability": "https://schema.org/InStock"
                 }
               }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "Product",
+                "name": "Celebrating You Every Day! Journal",
+                "description": "A self-reflection, happiness, and mindfulness journal for mothers to celebrate themselves every day.",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Think & Ink"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "INR",
+                  "price": "599",
+                  "availability": "https://schema.org/InStock"
+                }
+              }
             }
           ]
         })
@@ -207,25 +253,35 @@ function ShopPage() {
       bulbCount: 2,
     },
     {
-      title: "Mother's Day Special (Standard)",
-      desc: "She deserves more than a card. A 32-page guided keepsake for Mother's Day.",
-      price: "Sold Out",
-      badge: "Sold Out",
-      images: [mothersDayCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
+      title: "Celebrating You Every Day! Journal",
+      desc: "A beautiful self-reflection and happiness planner for mothers. Features Ikigai, weekly planners, and more.",
+      price: "₹599",
+      badge: "New Arrival",
+      images: [mothersDayCoverView2, celebratingImg5, celebratingImg4, celebratingImg3, celebratingImg2, celebratingImg1, celebratingImg6, celebratingImg7, celebratingImg8, celebratingImg9, celebratingImg10],
       icon: Heart,
-      penCount: 15,
-      bulbCount: 10,
+      penCount: 0,
+      bulbCount: 0,
     },
-    {
-      title: "Mother's Day Special (Customized)",
-      desc: "Includes child's name printed on the cover. A 32-page guided keepsake for Mother's Day.",
-      price: "Sold Out",
-      badge: "Sold Out",
-      images: [mothersDayCustomizedCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
-      icon: Heart,
-      penCount: 22,
-      bulbCount: 18,
-    },
+    // {
+    //   title: "Mother's Day Special (Standard)",
+    //   desc: "She deserves more than a card. A 32-page guided keepsake for Mother's Day.",
+    //   price: "Sold Out",
+    //   badge: "Sold Out",
+    //   images: [mothersDayCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
+    //   icon: Heart,
+    //   penCount: 15,
+    //   bulbCount: 10,
+    // },
+    // {
+    //   title: "Mother's Day Special (Customized)",
+    //   desc: "Includes child's name printed on the cover. A 32-page guided keepsake for Mother's Day.",
+    //   price: "Sold Out",
+    //   badge: "Sold Out",
+    //   images: [mothersDayCustomizedCover, mothersDayInside1, mothersDayInside2, mothersDayInside3, mothersDayInside4],
+    //   icon: Heart,
+    //   penCount: 22,
+    //   bulbCount: 18,
+    // },
   ];
 
   const digitalProducts = [
@@ -353,9 +409,9 @@ function ShopPage() {
               </p>
             </div>
             <div className="shrink-0 w-full md:w-auto">
-              <Button 
-                variant="hero" 
-                size="lg" 
+              <Button
+                variant="hero"
+                size="lg"
                 onClick={() => setIsBulkOrderOpen(true)}
                 className="w-full md:w-auto shadow-xl hover:shadow-2xl transition-all"
               >
@@ -521,7 +577,7 @@ function ShopPage() {
       {shelf.length > 0 && (
         <div className="fixed bottom-6 left-6 z-50">
           {!isShelfOpen && (
-            <button 
+            <button
               onClick={() => setIsShelfOpen(true)}
               className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-2xl hover:scale-105 transition-all flex items-center gap-3 font-display font-bold"
             >
@@ -529,7 +585,7 @@ function ShopPage() {
               My Shelf ({shelf.reduce((acc, item) => acc + item.quantity, 0)})
             </button>
           )}
-          
+
           {isShelfOpen && (
             <div className="bg-card w-80 rounded-3xl shadow-2xl border border-border/50 overflow-hidden flex flex-col animate-in slide-in-from-bottom-5">
               <div className="bg-primary/10 px-5 py-4 flex items-center justify-between">

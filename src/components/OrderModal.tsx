@@ -1,8 +1,16 @@
-import { useState } from "react";
-import { X, MessageCircle, Loader2, CheckCircle, MapPin, User, Phone, Hash, Package, Heart, Sparkles, CreditCard, Plus, Trash2 } from "lucide-react";
+import { useState, useMemo } from "react";
+import { X, MessageCircle, Loader2, CheckCircle, MapPin, User, Phone, Hash, Package, Heart, Sparkles, CreditCard, Plus, Trash2, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FEATURES } from "@/config/features";
 import { Zap } from "lucide-react";
+
+// ─── BUNDLE DISCOUNT CONSTANTS ─────────────────────────────────────────────────
+const CELEBRATING_YOU_TITLE = "Celebrating You Every Day! Journal";
+const GIRL_EDITION_TITLE = "Brave • Curious • Me  Girl Edition";
+const BOY_EDITION_TITLE = "Brave • Curious • Me  Boy Edition";
+const BUNDLE_DISCOUNT_ONE = 0.10; // 10% off when pairing with one edition
+const BUNDLE_DISCOUNT_BOTH = 0.15; // 15% off when pairing with both editions
+// ──────────────────────────────────────────────────────────────────────────────
 
 // ─── PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ───────────────────────────
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-DcbofEE2r-a1ynAl5YRZ8c5aPUfLKA-67lbwnNcD7u8Ga9gjq47U3vc9f6ffuLmu/exec";
@@ -51,6 +59,42 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     siblingBundle: false,
   });
 
+  // ─── BUNDLE DISCOUNT LOGIC ──────────────────────────────────────────────────
+  const bundleInfo = useMemo(() => {
+    const hasCelebratingYou = shelf.some(item => item.title === CELEBRATING_YOU_TITLE);
+    const hasGirl = shelf.some(item => item.title === GIRL_EDITION_TITLE);
+    const hasBoy = shelf.some(item => item.title === BOY_EDITION_TITLE);
+
+    if (hasCelebratingYou && hasGirl && hasBoy) {
+      return { discount: BUNDLE_DISCOUNT_BOTH, label: "15% Bundle Discount", description: "Celebrating You + Girl + Boy Edition bundle applied!" };
+    } else if (hasCelebratingYou && (hasGirl || hasBoy)) {
+      const edition = hasGirl ? "Girl" : "Boy";
+      return { discount: BUNDLE_DISCOUNT_ONE, label: "10% Bundle Discount", description: `Celebrating You + ${edition} Edition bundle applied!` };
+    }
+    return { discount: 0, label: "", description: "" };
+  }, [shelf]);
+
+  // What editions are missing for a potential upsell suggestion
+  const bundleSuggestion = useMemo(() => {
+    const hasCelebratingYou = shelf.some(item => item.title === CELEBRATING_YOU_TITLE);
+    const hasGirl = shelf.some(item => item.title === GIRL_EDITION_TITLE);
+    const hasBoy = shelf.some(item => item.title === BOY_EDITION_TITLE);
+
+    if (!hasCelebratingYou) return null; // Only suggest when Celebrating You is in the shelf
+    if (hasGirl && hasBoy) return null; // Already at max discount
+
+    if (!hasGirl && !hasBoy) {
+      return "Add a Girl or Boy Edition to get 10% off, or add both for 15% off!";
+    }
+    if (hasGirl && !hasBoy) {
+      return "Add the Boy Edition too to unlock 15% off the entire order!";
+    }
+    if (!hasGirl && hasBoy) {
+      return "Add the Girl Edition too to unlock 15% off the entire order!";
+    }
+    return null;
+  }, [shelf]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -75,8 +119,15 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     setForm({ ...form, childNames: newChildNames });
   };
 
+  const calculateSubtotal = () => {
+    return shelf.reduce((acc, item) => acc + parseInt(item.price.replace("₹", "")) * item.quantity, 0);
+  };
+
   const calculateTotal = () => {
-    let total = shelf.reduce((acc, item) => acc + parseInt(item.price.replace("₹", "")) * item.quantity, 0);
+    let subtotal = calculateSubtotal();
+    // Apply bundle discount on the subtotal
+    const discountAmount = Math.round(subtotal * bundleInfo.discount);
+    let total = subtotal - discountAmount;
     if (upsells.sketchPens) total += 99;
     if (upsells.siblingBundle) {
       total += 419;
@@ -184,6 +235,8 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
 
   const buildWhatsAppMessage = (f: FormData, orderId: string) => {
     const total = calculateTotal();
+    const subtotal = calculateSubtotal();
+    const discountAmount = Math.round(subtotal * bundleInfo.discount);
     let additions = "";
     if (upsells.sketchPens) additions += `+ Pastel Sketch Pens (₹99)\n`;
     if (upsells.siblingBundle) additions += `+ Sibling Bundle Upgrade (₹419)\n`;
@@ -200,6 +253,7 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
       `*Order ID:* ${orderId}\n` +
       `*Items:*\n${itemsList}\n` +
       (additions ? `*Add-ons:*\n${additions}` : "") +
+      (bundleInfo.discount > 0 ? `*🎁 Bundle Discount:* -₹${discountAmount} (${Math.round(bundleInfo.discount * 100)}% off)\n` : "") +
       `*Delivery:* ${deliveryType === "quick" ? "Instant Delivery ⚡" : "Regular Delivery"}\n` +
 
       `*Total Amount:* ₹${total}\n` +
@@ -226,6 +280,7 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     let additionsList = [];
     if (upsells.sketchPens) additionsList.push("Sketch Pens");
     if (upsells.siblingBundle) additionsList.push("Sibling Bundle");
+    if (bundleInfo.discount > 0) additionsList.push(`Bundle ${Math.round(bundleInfo.discount * 100)}% Off`);
 
     const itemsListString = shelf.map(item => `${item.title} (x${item.quantity})`).join(', ');
     const totalQuantity = shelf.reduce((acc, item) => acc + item.quantity, 0);
@@ -422,6 +477,30 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
                   <input type="checkbox" checked={upsells.siblingBundle} onChange={() => handleUpsellChange('siblingBundle')} className="rounded text-primary" />
                   <span className="text-xs font-medium text-foreground">Sibling Bundle (+ ₹419)</span>
                 </label>
+              </div>
+            )}
+
+            {/* ─── BUNDLE DISCOUNT BANNER ─── */}
+            {bundleInfo.discount > 0 && (
+              <div className="bg-teal/5 border border-teal/20 rounded-2xl p-4 space-y-2">
+                <p className="text-xs font-bold text-teal flex items-center gap-2 uppercase tracking-widest">
+                  <Gift className="w-3.5 h-3.5" /> {bundleInfo.label}
+                </p>
+                <p className="text-sm text-foreground font-medium">{bundleInfo.description}</p>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-xs text-muted-foreground line-through">₹{calculateSubtotal()}</span>
+                  <span className="text-sm font-bold text-teal">You save ₹{Math.round(calculateSubtotal() * bundleInfo.discount)}</span>
+                </div>
+              </div>
+            )}
+
+            {/* ─── BUNDLE SUGGESTION (upsell nudge) ─── */}
+            {bundleSuggestion && bundleInfo.discount < BUNDLE_DISCOUNT_BOTH && (
+              <div className="bg-amber/5 border border-amber/20 rounded-2xl px-4 py-3 flex items-start gap-3">
+                <Gift className="w-4 h-4 text-amber shrink-0 mt-0.5" />
+                <p className="text-xs text-foreground leading-relaxed">
+                  <span className="font-bold">Bundle & Save!</span> {bundleSuggestion}
+                </p>
               </div>
             )}
 
