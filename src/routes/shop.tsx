@@ -254,9 +254,9 @@ function ShopPage() {
     },
     {
       title: "Celebrating You Every Day! Journal",
-      desc: "A beautiful self-reflection and happiness planner for mothers. Features Ikigai, weekly planners, and more.",
-      price: "₹599",
-      badge: "New Arrival",
+      desc: "A beautiful self-reflection and happiness planner for mothers. Features Ikigai, weekly planners, and more. Launching soon!",
+      price: "Coming Soon",
+      badge: "Coming Soon",
       images: [mothersDayCoverView2, celebratingImg5, celebratingImg4, celebratingImg3, celebratingImg2, celebratingImg1, celebratingImg6, celebratingImg7, celebratingImg8, celebratingImg9, celebratingImg10],
       icon: Heart,
       penCount: 0,
