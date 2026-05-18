@@ -5,11 +5,8 @@ import { FEATURES } from "@/config/features";
 import { Zap } from "lucide-react";
 
 // ─── BUNDLE DISCOUNT CONSTANTS ─────────────────────────────────────────────────
-const CELEBRATING_YOU_TITLE = "Celebrating You Every Day! Journal";
-const GIRL_EDITION_TITLE = "Brave • Curious • Me  Girl Edition";
-const BOY_EDITION_TITLE = "Brave • Curious • Me  Boy Edition";
-const BUNDLE_DISCOUNT_ONE = 0.10; // 10% off when pairing with one edition
-const BUNDLE_DISCOUNT_BOTH = 0.15; // 15% off when pairing with both editions
+const BUNDLE_DISCOUNT_TWO = 0.10; // 10% off when buying any 2 different books
+const BUNDLE_DISCOUNT_THREE = 0.15; // 15% off when buying all 3 different books
 // ──────────────────────────────────────────────────────────────────────────────
 
 // ─── PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ───────────────────────────
@@ -60,40 +57,28 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
   });
 
   // ─── BUNDLE DISCOUNT LOGIC ──────────────────────────────────────────────────
-  const bundleInfo = useMemo(() => {
-    const hasCelebratingYou = shelf.some(item => item.title === CELEBRATING_YOU_TITLE);
-    const hasGirl = shelf.some(item => item.title === GIRL_EDITION_TITLE);
-    const hasBoy = shelf.some(item => item.title === BOY_EDITION_TITLE);
+  const uniqueTitles = useMemo(() => new Set(shelf.map(item => item.title)).size, [shelf]);
 
-    if (hasCelebratingYou && hasGirl && hasBoy) {
-      return { discount: BUNDLE_DISCOUNT_BOTH, label: "15% Bundle Discount", description: "Celebrating You + Girl + Boy Edition bundle applied!" };
-    } else if (hasCelebratingYou && (hasGirl || hasBoy)) {
-      const edition = hasGirl ? "Girl" : "Boy";
-      return { discount: BUNDLE_DISCOUNT_ONE, label: "10% Bundle Discount", description: `Celebrating You + ${edition} Edition bundle applied!` };
+  const bundleInfo = useMemo(() => {
+    if (uniqueTitles >= 3) {
+      return { discount: BUNDLE_DISCOUNT_THREE, label: "15% Bundle Discount", description: "3 different books in your shelf — maximum bundle applied!" };
+    } else if (uniqueTitles === 2) {
+      return { discount: BUNDLE_DISCOUNT_TWO, label: "10% Bundle Discount", description: "2 different books in your shelf — bundle discount applied!" };
     }
     return { discount: 0, label: "", description: "" };
-  }, [shelf]);
+  }, [uniqueTitles]);
 
-  // What editions are missing for a potential upsell suggestion
+  // Upsell suggestion when user could unlock a bigger discount
   const bundleSuggestion = useMemo(() => {
-    const hasCelebratingYou = shelf.some(item => item.title === CELEBRATING_YOU_TITLE);
-    const hasGirl = shelf.some(item => item.title === GIRL_EDITION_TITLE);
-    const hasBoy = shelf.some(item => item.title === BOY_EDITION_TITLE);
-
-    if (!hasCelebratingYou) return null; // Only suggest when Celebrating You is in the shelf
-    if (hasGirl && hasBoy) return null; // Already at max discount
-
-    if (!hasGirl && !hasBoy) {
-      return "Add a Girl or Boy Edition to get 10% off, or add both for 15% off!";
+    if (uniqueTitles >= 3) return null; // Already at max discount
+    if (uniqueTitles === 2) {
+      return "Add a third book to unlock 15% off the entire order!";
     }
-    if (hasGirl && !hasBoy) {
-      return "Add the Boy Edition too to unlock 15% off the entire order!";
-    }
-    if (!hasGirl && hasBoy) {
-      return "Add the Girl Edition too to unlock 15% off the entire order!";
+    if (uniqueTitles === 1) {
+      return "Add another book to get 10% off, or add two more for 15% off!";
     }
     return null;
-  }, [shelf]);
+  }, [uniqueTitles]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -495,7 +480,7 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
             )}
 
             {/* ─── BUNDLE SUGGESTION (upsell nudge) ─── */}
-            {bundleSuggestion && bundleInfo.discount < BUNDLE_DISCOUNT_BOTH && (
+            {bundleSuggestion && bundleInfo.discount < BUNDLE_DISCOUNT_THREE && (
               <div className="bg-amber/5 border border-amber/20 rounded-2xl px-4 py-3 flex items-start gap-3">
                 <Gift className="w-4 h-4 text-amber shrink-0 mt-0.5" />
                 <p className="text-xs text-foreground leading-relaxed">

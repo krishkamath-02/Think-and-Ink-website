@@ -43,16 +43,18 @@ import boyInside6 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 2
 import boyInside7 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16.jpeg";
 
 // Celebrating You Every Day
-import celebratingImg1 from "@/assets/celebrating-you/img1.png";
-import celebratingImg2 from "@/assets/celebrating-you/img2.png";
-import celebratingImg3 from "@/assets/celebrating-you/img3.png";
-import celebratingImg4 from "@/assets/celebrating-you/img4.png";
-import celebratingImg5 from "@/assets/celebrating-you/img5.png";
-import celebratingImg6 from "@/assets/celebrating-you/img6.png";
-import celebratingImg7 from "@/assets/celebrating-you/img7.png";
-import celebratingImg8 from "@/assets/celebrating-you/img8.png";
-import celebratingImg9 from "@/assets/celebrating-you/img9.png";
-import celebratingImg10 from "@/assets/celebrating-you/img10.png";
+import celebratingImg1 from "@/assets/celebrating-you/Celebrating_you_image_1.jpeg";
+import celebratingImg2 from "@/assets/celebrating-you/Celebrating_you_image_2.jpeg";
+import celebratingImg3 from "@/assets/celebrating-you/Celebrating_you_image_3.jpeg";
+import celebratingImg4 from "@/assets/celebrating-you/Celebrating_you_image_4.jpeg";
+import celebratingImg5 from "@/assets/celebrating-you/Celebrating_you_image_5.jpeg";
+import celebratingImg6 from "@/assets/celebrating-you/img2.png";
+import celebratingImg7 from "@/assets/celebrating-you/img4.png";
+import celebratingImg8 from "@/assets/celebrating-you/img5.png";
+import celebratingImg9 from "@/assets/celebrating-you/img7.png";
+import celebratingImg10 from "@/assets/celebrating-you/img8.png";
+import celebratingImg11 from "@/assets/celebrating-you/img9.png";
+import celebratingImg12 from "@/assets/celebrating-you/img10.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -72,7 +74,7 @@ function Index() {
   const girlPages = [girlInside3, girlInside4, girlIntro, girlInside5, girlInside6, girlInside7];
   const boyPages = [boyInside5, boyInside4, boyIntro, boyInside2, readingCorner, boyInside1];
   // const mothersDayPages = [mothersDayInside1, mothersDayInside2, mothersDayCustomized ? mothersDayCustomizedCover : mothersDayCover, mothersDayInside3, mothersDayInside4];
-  const celebratingYou = [celebratingImg1, celebratingImg2, celebratingImg5, celebratingImg3, celebratingImg4, celebratingImg6, celebratingImg7, celebratingImg8, celebratingImg9, celebratingImg10];
+  const celebratingYou = [celebratingImg1, celebratingImg2, celebratingImg8, celebratingImg5, celebratingImg3, celebratingImg4, celebratingImg6, celebratingImg7, celebratingImg9, celebratingImg10, celebratingImg11, celebratingImg12];
 
   const activePages =
     activeEdition === 'girl' ? girlPages :
@@ -176,8 +178,8 @@ function Index() {
                 </div>
               </div>
 
-              {/* Brave badge top-right of entire group */}
-              <div className="absolute -top-6 right-0 bg-secondary text-secondary-foreground rounded-2xl px-3 py-1.5 shadow-lg animate-sparkle text-xs font-bold">
+              {/* Brave badge top-left of entire group */}
+              <div className="absolute -top-6 left-0 bg-secondary text-secondary-foreground rounded-2xl px-3 py-1.5 shadow-lg animate-sparkle text-xs font-bold">
                 <Heart className="w-4 h-4 inline mr-1 text-primary" />
                 Curious
               </div>
@@ -211,7 +213,7 @@ function Index() {
               Bundle & <span className="text-teal">Save</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Pair our brand-new <strong>Celebrating You Every Day!</strong> journal with our kids' editions and unlock exclusive discounts.
+              Mix and match any of our journals — the more you add, the more you save!
             </p>
           </Reveal>
 
@@ -225,14 +227,14 @@ function Index() {
                 <div className="w-14 h-14 bg-teal/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Gift className="w-7 h-7 text-teal" />
                 </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-3">Duo Bundle</h3>
+                <h3 className="font-display text-xl font-bold text-foreground mb-3">Pick Any 2</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Add <strong>Celebrating You Every Day!</strong> with either the <strong>Girl Edition</strong> or <strong>Boy Edition</strong> to your shelf and get <span className="font-bold text-teal">10% off</span> your entire order.
+                  Add any <strong>2 different journals</strong> to your shelf and get <span className="font-bold text-teal">10% off</span> your entire order. Mix kids' and adults' editions however you like!
                 </p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🌸 Girl + 💝 Celebrating You</span>
-                  <span className="text-muted-foreground/50">or</span>
-                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🚀 Boy + 💝 Celebrating You</span>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🌸 Girl</span>
+                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🚀 Boy</span>
+                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">💝 Celebrating You</span>
                 </div>
               </div>
             </Reveal>
@@ -246,12 +248,12 @@ function Index() {
                 <div className="w-14 h-14 bg-amber/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Sparkles className="w-7 h-7 text-amber" />
                 </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-3">Family Bundle</h3>
+                <h3 className="font-display text-xl font-bold text-foreground mb-3">Get All 3</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Get all three — <strong>Girl Edition</strong> + <strong>Boy Edition</strong> + <strong>Celebrating You Every Day!</strong> — and enjoy <span className="font-bold text-amber">15% off</span> the entire order. The ultimate Think & Ink family set!
+                  Add all three journals — <strong>Girl Edition</strong> + <strong>Boy Edition</strong> + <strong>Celebrating You Every Day!</strong> — and enjoy <span className="font-bold text-amber">15% off</span> the entire order. The ultimate Think & Ink family set!
                 </p>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1 bg-amber/10 px-3 py-1 rounded-full font-semibold text-amber-900">🌸 Girl + 🚀 Boy + 💝 Celebrating You</span>
+                  <span className="inline-flex items-center gap-1 bg-amber/10 px-3 py-1 rounded-full font-semibold text-amber-900">🌸 + 🚀 + 💝 All Three!</span>
                 </div>
               </div>
             </Reveal>

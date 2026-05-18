@@ -125,7 +125,7 @@ export function Testimonials() {
                 ))}
               </div>
               <div className="text-left">
-                <p className="text-sm font-bold text-foreground">Join 50+ happy parents</p>
+                <p className="text-sm font-bold text-foreground">Join 100+ happy parents</p>
                 <p className="text-xs text-muted-foreground">Helping kids grow with emotional intelligence every day.</p>
               </div>
               <div className="flex items-center gap-1">

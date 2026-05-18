@@ -56,17 +56,18 @@ import mothersDayInside8 from "@/assets/celebrating-you/img8.png";
 import mothersDayInside9 from "@/assets/celebrating-you/img9.png";
 import mothersDayInside10 from "@/assets/celebrating-you/img10.png";
 
-// Celebrating You Every Day
-import celebratingImg1 from "@/assets/celebrating-you/img1.png";
-import celebratingImg2 from "@/assets/celebrating-you/img2.png";
-import celebratingImg3 from "@/assets/celebrating-you/img3.png";
-import celebratingImg4 from "@/assets/celebrating-you/img4.png";
-import celebratingImg5 from "@/assets/celebrating-you/img5.png";
-import celebratingImg6 from "@/assets/celebrating-you/img6.png";
-import celebratingImg7 from "@/assets/celebrating-you/img7.png";
-import celebratingImg8 from "@/assets/celebrating-you/img8.png";
-import celebratingImg9 from "@/assets/celebrating-you/img9.png";
-import celebratingImg10 from "@/assets/celebrating-you/img10.png";
+// Celebrating You Every Dayimport celebratingImg1 from "@/assets/celebrating-you/Celebrating_you_image_1.jpeg";
+import celebratingImg1 from "@/assets/celebrating-you/Celebrating_you_image_2.jpeg";
+import celebratingImg2 from "@/assets/celebrating-you/Celebrating_you_image_3.jpeg";
+import celebratingImg3 from "@/assets/celebrating-you/Celebrating_you_image_4.jpeg";
+import celebratingImg4 from "@/assets/celebrating-you/Celebrating_you_image_5.jpeg";
+import celebratingImg5 from "@/assets/celebrating-you/img2.png";
+import celebratingImg6 from "@/assets/celebrating-you/img4.png";
+import celebratingImg7 from "@/assets/celebrating-you/img5.png";
+import celebratingImg8 from "@/assets/celebrating-you/img7.png";
+import celebratingImg9 from "@/assets/celebrating-you/img8.png";
+import celebratingImg10 from "@/assets/celebrating-you/img9.png";
+import celebratingImg11 from "@/assets/celebrating-you/img10.png";
 import mothersDayCoverView2 from "@/assets/mothers-day/Mothers-day-cover.png";
 
 function ReactionButtons({ initialPen, initialBulb }: { initialPen: number, initialBulb: number }) {
@@ -254,10 +255,11 @@ function ShopPage() {
     },
     {
       title: "Celebrating You Every Day! Journal",
-      desc: "A beautiful self-reflection and happiness planner for mothers. Features Ikigai, weekly planners, and more. Launching soon!",
-      price: "Coming Soon",
-      badge: "Coming Soon",
-      images: [mothersDayCoverView2, celebratingImg5, celebratingImg4, celebratingImg3, celebratingImg2, celebratingImg1, celebratingImg6, celebratingImg7, celebratingImg8, celebratingImg9, celebratingImg10],
+      desc: "A beautiful self-reflection and happiness planner for mothers. Features Ikigai, weekly planners, and more.",
+      price: "₹699",
+      badge: "Launching Offer",
+      launchingOffer: true,
+      images: [mothersDayCoverView2, celebratingImg7, celebratingImg1, celebratingImg2, celebratingImg3, celebratingImg4, celebratingImg5, celebratingImg6, celebratingImg8, celebratingImg9, celebratingImg10],
       icon: Heart,
       penCount: 0,
       bulbCount: 0,
@@ -327,6 +329,18 @@ function ShopPage() {
               <Reveal key={product.title} delay={i * 0.1}>
                 <div className="group h-full bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-border/50">
                   <div className="relative aspect-square bg-warm flex items-center justify-center p-8 overflow-hidden">
+                    {/* Launching Offer banner */}
+                    {product.launchingOffer && (
+                      <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-r from-amber via-amber/90 to-amber py-1.5 text-center">
+                        <p className="text-[10px] md:text-xs font-black text-amber-foreground uppercase tracking-[0.15em] flex items-center justify-center gap-2">
+                          <span>🎉</span>
+                          <span>Launching Offer</span>
+                          <span>•</span>
+                          <span>Limited Time</span>
+                          <span>🎉</span>
+                        </p>
+                      </div>
+                    )}
                     <Carousel className="w-full max-w-[75%]">
                       <CarouselContent>
                         {product.images.map((img, i) => (
@@ -341,7 +355,7 @@ function ShopPage() {
                       <CarouselNext className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 hover:bg-white" />
                     </Carousel>
                     {product.badge && (
-                      <span className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                      <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 rounded-full ${product.launchingOffer ? 'top-10 bg-amber text-amber-foreground' : 'bg-primary text-primary-foreground'}`}>
                         {product.badge}
                       </span>
                     )}

@@ -18,7 +18,7 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const collections = [
+  const kidsCollections = [
     {
       label: "Girl Edition",
       sublabel: "Brave • Curious • Me",
@@ -31,14 +31,17 @@ export function Header() {
       sublabel: "Brave • Curious • Me",
       emoji: "🚀",
       href: "/shop",
-      badge: "Just Launched",
+      badge: null,
     },
+  ];
+
+  const adultsCollections = [
     {
       label: "Celebrating You Every Day!",
       sublabel: "Self-Reflection Journal",
       emoji: "💝",
       href: "/shop",
-      badge: "New",
+      badge: "Just Launched",
     },
   ];
 
@@ -78,16 +81,14 @@ export function Header() {
                   </p>
                 </div>
                 <div className="p-2">
-                  {collections.map((col) => (
+                  {/* Kids Section */}
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/50 px-3 pt-1 pb-1.5">For Kids</p>
+                  {kidsCollections.map((col) => (
                     <Link
                       key={col.label}
                       to={col.href}
                       onClick={() => setCollectionsOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
-                        col.disabled
-                          ? "opacity-50 pointer-events-none"
-                          : "hover:bg-secondary/70 cursor-pointer"
-                      }`}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group hover:bg-secondary/70 cursor-pointer"
                     >
                       <span className="text-xl leading-none">{col.emoji}</span>
                       <div className="flex-1 min-w-0">
@@ -95,11 +96,32 @@ export function Header() {
                         <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">{col.label}</p>
                       </div>
                       {col.badge && (
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
-                          col.badge === "Soon"
-                            ? "bg-muted text-muted-foreground"
-                            : "bg-primary text-primary-foreground"
-                        }`}>
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 bg-primary text-primary-foreground">
+                          {col.badge}
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+
+                  {/* Divider */}
+                  <div className="mx-3 my-1.5 border-t border-border/40" />
+
+                  {/* Adults Section */}
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/50 px-3 pt-1 pb-1.5">For Adults</p>
+                  {adultsCollections.map((col) => (
+                    <Link
+                      key={col.label}
+                      to={col.href}
+                      onClick={() => setCollectionsOpen(false)}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group hover:bg-secondary/70 cursor-pointer"
+                    >
+                      <span className="text-xl leading-none">{col.emoji}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-foreground leading-tight">{col.sublabel}</p>
+                        <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">{col.label}</p>
+                      </div>
+                      {col.badge && (
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 bg-amber text-amber-foreground">
                           {col.badge}
                         </span>
                       )}
@@ -139,20 +161,48 @@ export function Header() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-2 flex items-center gap-1.5">
               <BookOpen className="w-3 h-3" />Collections
             </p>
-            {collections.map((col) => (
+
+            {/* Kids */}
+            <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/40 pl-3 pt-1 pb-1">For Kids</p>
+            {kidsCollections.map((col) => (
               <Link
                 key={col.label}
                 to={col.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 py-2 pl-3 rounded-xl ${col.disabled ? "opacity-50 pointer-events-none" : ""}`}
+                className="flex items-center gap-3 py-2 pl-3 rounded-xl"
               >
                 <span className="text-base">{col.emoji}</span>
                 <div>
                   <p className="text-xs font-semibold text-foreground">{col.sublabel}</p>
                   <p className="text-[11px] text-muted-foreground">{col.label}</p>
                 </div>
-                {col.badge && col.badge !== "Soon" && (
+                {col.badge && (
                   <span className="ml-auto text-[9px] font-bold px-2 py-0.5 rounded-full bg-primary text-primary-foreground">
+                    {col.badge}
+                  </span>
+                )}
+              </Link>
+            ))}
+
+            {/* Divider */}
+            <div className="mx-3 my-1 border-t border-border/30" />
+
+            {/* Adults */}
+            <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/40 pl-3 pt-1 pb-1">For Adults</p>
+            {adultsCollections.map((col) => (
+              <Link
+                key={col.label}
+                to={col.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 py-2 pl-3 rounded-xl"
+              >
+                <span className="text-base">{col.emoji}</span>
+                <div>
+                  <p className="text-xs font-semibold text-foreground">{col.sublabel}</p>
+                  <p className="text-[11px] text-muted-foreground">{col.label}</p>
+                </div>
+                {col.badge && (
+                  <span className="ml-auto text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber text-amber-foreground">
                     {col.badge}
                   </span>
                 )}

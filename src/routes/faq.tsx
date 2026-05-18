@@ -19,40 +19,65 @@ export const Route = createFileRoute("/faq")({
 
 const faqs = [
   {
-    category: "About the Journal",
+    category: "About the Journals",
     items: [
       {
-        q: "What age group is the journal designed for?",
-        a: "The Think & Ink guided journal is designed for kids aged 6–12. The prompts are thoughtfully crafted to be simple enough for early readers yet engaging enough for older children.",
+        q: "What journals do you offer?",
+        a: "We currently offer three journals:\n\n• Brave • Curious • Me — Girl Edition (ages 6–12)\n• Brave • Curious • Me — Boy Edition (ages 6–12)\n• Celebrating You Every Day! — A self-reflection & happiness planner designed for adults (mothers, women, and anyone who values self-care).",
       },
       {
-        q: "How many pages does the journal have?",
-        a: "The journal has approximately 90 pages, including guided prompts, affirmation pages, creative activities, gratitude sections, and alot more.",
+        q: "What age group are the kids' journals designed for?",
+        a: "The Brave • Curious • Me journals (Girl & Boy Editions) are designed for kids aged 6–12. The prompts are thoughtfully crafted to be simple enough for early readers yet engaging enough for older children.",
       },
       {
-        q: "What's inside the journal?",
-        a: "Inside you'll find guided journaling prompts, daily affirmations, creative activities, gratitude & reflection pages, habit tracker and lots more.",
+        q: "What's inside the kids' journals?",
+        a: "Inside you'll find guided journaling prompts, daily affirmations, creative activities, gratitude & reflection pages, habit trackers, and lots more — all designed to build emotional intelligence.",
       },
       {
-        q: "Is it available for boys too?",
-        a: "Yes! The Boy Edition is coming soon. Sign up on our contact page or message us on WhatsApp and we'll notify you as soon as it's available.",
+        q: "What's inside the 'Celebrating You Every Day!' journal?",
+        a: "It's a beautiful self-reflection and happiness planner featuring Ikigai exercises, weekly planners, gratitude pages, mood trackers, and thoughtful prompts designed to help you celebrate yourself every single day.",
+      },
+      {
+        q: "How many pages do the journals have?",
+        a: "The kids' journals have approximately 90 pages each. The Celebrating You Every Day! journal also has around 90+ thoughtfully designed pages.",
       },
       {
         q: "Is it a hardcover or softcover book?",
-        a: "The journal is A4 size with a soft cover,with 100gsm paper that lets your child freely write , draw , colour without fearing about anything.  —The A4 size makes it easy for young kids to hold, carry, and use comfortably.",
+        a: "All journals are A4 size with a soft cover, printed on 100gsm paper that lets you freely write, draw, and colour without worrying about bleed-through. The A4 size makes it comfortable to hold and use.",
       },
     ],
   },
   {
-    category: "Ordering",
+    category: "Bundle Discounts",
+    items: [
+      {
+        q: "What is the Bundle & Save offer?",
+        a: "Buy more, save more! When you add multiple different journals to your shelf, discounts apply automatically:\n\n• Any 2 different books — 10% off your entire order\n• All 3 different books — 15% off your entire order\n\nMix and match kids' and adults' editions however you like!",
+      },
+      {
+        q: "Which combinations qualify for the discount?",
+        a: "Any combination of 2 or 3 different journals qualifies — Girl + Boy, Girl + Celebrating You, Boy + Celebrating You, or all three together. The discount is based purely on the number of unique titles in your shelf.",
+      },
+      {
+        q: "How is the bundle discount applied?",
+        a: "The discount is calculated on the product subtotal (before add-ons and delivery charges). It's applied automatically when qualifying items are in your shelf — no coupon code needed!",
+      },
+    ],
+  },
+  {
+    category: "Ordering & Payment",
     items: [
       {
         q: "How do I place an order?",
-        a: "Click the 'Order via WhatsApp' button on the Shop page, fill in your delivery details, and you'll be redirected to WhatsApp where you can confirm your order and share payment.",
+        a: "Browse our Shop page, add journals to your shelf, and click 'Place Order'. Fill in your delivery details and choose your preferred checkout method — Pay Online (Razorpay) or confirm via WhatsApp.",
       },
       {
         q: "What payment methods do you accept?",
-        a: "We accept UPI (Google Pay, PhonePe, Paytm), NEFT/IMPS bank transfer, and all major debit/credit cards. We do not accept Cash on Delivery.",
+        a: "We accept online payments through Razorpay (UPI, Google Pay, PhonePe, Paytm, debit/credit cards, net banking) and direct payment via WhatsApp (UPI/GPay). We do not accept Cash on Delivery.",
+      },
+      {
+        q: "Is online payment secure?",
+        a: "Absolutely! All online payments are processed through Razorpay, one of India's most trusted payment gateways. Your payment details are encrypted and never stored on our servers.",
       },
       {
         q: "When will my order be dispatched?",
@@ -65,19 +90,23 @@ const faqs = [
     ],
   },
   {
-    category: "Shipping",
+    category: "Shipping & Delivery",
     items: [
       {
         q: "Do you ship across India?",
-        a: "Yes, we ship pan-India — to every state and union territory.",
+        a: "Yes, we ship pan-India — to every state and union territory. Shipping is free on all orders!",
       },
       {
         q: "How long does delivery take?",
-        a: "Delivery takes 3–7 business days depending on your location. Metro cities are typically faster (3–4 days) while remote areas may take up to 7 business days.",
+        a: "Regular delivery takes 3–7 business days depending on your location. Metro cities are typically faster (3–4 days) while remote areas may take up to 7 business days.",
+      },
+      {
+        q: "Do you offer same-day delivery?",
+        a: "Yes! If you're in Pune (pincodes starting with 411 or 412), you can opt for same-day delivery for an additional ₹99. Orders placed before 4 PM are delivered the same day; orders after 4 PM are delivered the next day.",
       },
       {
         q: "What are the shipping charges?",
-        a: "Shipping is free!!",
+        a: "Standard shipping is completely free across India! Same-day delivery in Pune is available for ₹99 extra.",
       },
       {
         q: "Will I get a tracking number?",
