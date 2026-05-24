@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Heart } from "lucide-react";
+import { Heart, Mail } from "lucide-react";
+import logoBrown from "@/assets/logo/logo-brown.png";
 
 export function Footer() {
   return (
@@ -7,7 +8,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
-            <h3 className="font-display text-2xl font-bold mb-4">Think <span className="text-primary">&</span> Ink</h3>
+            <Link to="/" className="inline-block mb-4 hover:opacity-90 transition-opacity">
+              <img src={logoBrown} alt="Think & Ink Logo" className="h-12 w-auto object-contain brightness-0 invert" />
+            </Link>
             <p className="text-background/70 text-sm leading-relaxed max-w-sm">
               Empowering kids to think, feel, and write. Because your thoughts are worth thinking, your words are worth writing, and you are worth knowing.
             </p>
@@ -25,6 +28,13 @@ export function Footer() {
           <div>
             <h4 className="font-display font-semibold mb-4 text-sm uppercase tracking-wider text-background/50">Connect</h4>
             <div className="space-y-3">
+              <a
+                href="mailto:thinkandink10@gmail.com"
+                className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors group"
+              >
+                <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                thinkandink10@gmail.com
+              </a>
               <a
                 href="https://www.instagram.com/thinkandink.kids"
                 target="_blank"

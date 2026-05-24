@@ -34,8 +34,22 @@ function ContactPage() {
             </div>
             <h1 className="font-display text-5xl md:text-6xl font-bold text-foreground">We'd Love to Hear From You</h1>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-              Questions, feedback, or just want to say hello? Drop us a message.
+              Questions, feedback, or just want to say hello? Drop us a message or reach out directly.
             </p>
+            <div className="flex justify-center mt-8">
+              <a 
+                href="mailto:thinkandink10@gmail.com"
+                className="flex items-center gap-3.5 px-6 py-4 rounded-2xl bg-secondary/30 border border-border/40 hover:bg-secondary/60 hover:border-primary/20 transition-all duration-300 group shadow-sm hover:shadow"
+              >
+                <div className="p-2.5 rounded-xl bg-background text-primary group-hover:scale-110 transition-transform shadow-sm">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div className="text-left">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 leading-none">Email Us Directly</p>
+                  <p className="text-sm font-bold text-foreground mt-1.5 group-hover:text-primary transition-colors">thinkandink10@gmail.com</p>
+                </div>
+              </a>
+            </div>
           </Reveal>
 
           {submitted ? (

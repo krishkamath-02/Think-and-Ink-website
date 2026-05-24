@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronDown, BookOpen, Sparkles } from "lucide-react";
+import logoColor from "@/assets/logo/logo-color.png";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -48,10 +49,8 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-3">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-display text-2xl font-bold tracking-tight text-foreground">
-            Think <span className="text-primary">&</span> Ink
-          </span>
+        <Link to="/" className="flex items-center">
+          <img src={logoColor} alt="Think & Ink Logo" className="h-11 md:h-14 w-auto object-contain" />
         </Link>
 
         {/* Desktop nav */}
