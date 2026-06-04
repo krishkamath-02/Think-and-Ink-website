@@ -7,9 +7,10 @@ import coverFull from "@/assets/cover-girl-edition.png";
 import { Reveal } from "@/components/Reveal";
 import { OrderModal } from "@/components/OrderModal";
 import { BulkOrderModal } from "@/components/BulkOrderModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FEATURES } from "@/config/features";
 import { Plus, Minus, Trash2, Library, X, PackageOpen } from "lucide-react";
+import { trackAddToCart, trackRemoveFromCart, trackViewCart, trackBeginCheckout } from "@/lib/analytics";
 import {
   Carousel,
   CarouselContent,
@@ -18,6 +19,43 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import girlCover3d from "@/assets/product-mockup-3d.png";
+import girlCoverV23D from "@/assets/girl-edition/volume 2/product-mockup-girl-v2-3d.png";
+
+//Life skills journal for Girls and Boys
+import lifeSkillsCoverV1_3d from "@/assets/life skills/product-mockup-lifeskills-v1-3d.png";
+import lifeSkillsImg1 from "@/assets/life skills/1.jpg";
+import lifeSkillsImg2 from "@/assets/life skills/3.jpg";
+import lifeSkillsImg3 from "@/assets/life skills/4.jpg";
+import lifeSkillsImg4 from "@/assets/life skills/7.jpg";
+import lifeSkillsImg5 from "@/assets/life skills/9.jpg";
+import lifeSkillsImg6 from "@/assets/life skills/11.jpg";
+import lifeSkillsImg7 from "@/assets/life skills/31.jpg";
+import lifeSkillsImg8 from "@/assets/life skills/32.jpg";
+import lifeSkillsImg9 from "@/assets/life skills/35.jpg";
+import lifeSkillsImg10 from "@/assets/life skills/53.jpg";
+import lifeSkillsImg11 from "@/assets/life skills/62.jpg";
+import lifeSkillsImg12 from "@/assets/life skills/66.jpg";
+import lifeSkillsImg13 from "@/assets/life skills/81.jpg";
+
+
+// Girl Edition Volume 2
+import girlEditionV2Img1 from "@/assets/girl-edition/volume 2/1.jpg";
+import girlEditionV2Img15 from "@/assets/girl-edition/volume 2/5.jpg";
+import girlEditionV2Img16 from "@/assets/girl-edition/volume 2/9.jpg";
+import girlEditionV2Img2 from "@/assets/girl-edition/volume 2/10.jpg";
+import girlEditionV2Img3 from "@/assets/girl-edition/volume 2/11.jpg";
+import girlEditionV2Img4 from "@/assets/girl-edition/volume 2/14.jpg";
+import girlEditionV2Img5 from "@/assets/girl-edition/volume 2/16.jpg";
+import girlEditionV2Img6 from "@/assets/girl-edition/volume 2/17.jpg";
+import girlEditionV2Img7 from "@/assets/girl-edition/volume 2/22.jpg";
+import girlEditionV2Img8 from "@/assets/girl-edition/volume 2/30.jpg";
+import girlEditionV2Img9 from "@/assets/girl-edition/volume 2/32.jpg";
+import girlEditionV2Img10 from "@/assets/girl-edition/volume 2/37.jpg";
+import girlEditionV2Img11 from "@/assets/girl-edition/volume 2/40.jpg";
+import girlEditionV2Img12 from "@/assets/girl-edition/volume 2/52.jpg";
+import girlEditionV2Img13 from "@/assets/girl-edition/volume 2/62.jpg";
+import girlEditionV2Img14 from "@/assets/girl-edition/volume 2/72.jpg";
+
 import girlEdition1 from "@/assets/girl-edition/4.jpg";
 import girlEdition2 from "@/assets/girl-edition/8.jpg";
 import girlEdition3 from "@/assets/girl-edition/10.jpg";
@@ -205,6 +243,44 @@ export const Route = createFileRoute("/shop")({
                   "availability": "https://schema.org/InStock"
                 }
               }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "Product",
+                "name": "Brave • Curious • Me  Girl Edition Volume 2",
+                "description": "The highly anticipated sequel to our best-selling girl edition. Packed with all-new guided prompts, gratitude pages, and creative challenges for girls aged 6–12.",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Think & Ink"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "INR",
+                  "price": "599",
+                  "availability": "https://schema.org/InStock"
+                }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 7,
+              "item": {
+                "@type": "Product",
+                "name": "Brave • Curious • Me  Life Skills Journal Volume 1",
+                "description": "A specialized journal focused on essential life skills, goal setting, emotional growth, and problem-solving exercises for kids.",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Think & Ink"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "INR",
+                  "price": "699",
+                  "availability": "https://schema.org/InStock"
+                }
+              }
             }
           ]
         })
@@ -220,6 +296,13 @@ function ShopPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isBulkOrderOpen, setIsBulkOrderOpen] = useState(false);
 
+  // Track when Shelf widget drawer is opened/closed
+  useEffect(() => {
+    if (isShelfOpen && shelf.length > 0) {
+      trackViewCart(shelf);
+    }
+  }, [isShelfOpen]);
+
   const addToShelf = (product: { title: string; price: string; image: string }) => {
     setShelf(prev => {
       const existing = prev.find(p => p.title === product.title);
@@ -229,6 +312,7 @@ function ShopPage() {
       return [...prev, { title: product.title, price: product.price, quantity: 1, image: product.image }];
     });
     setIsShelfOpen(true);
+    trackAddToCart({ title: product.title, price: product.price, quantity: 1 });
   };
 
   const products = [
@@ -236,7 +320,7 @@ function ShopPage() {
       title: "Brave • Curious • Me  Girl Edition",
       desc: "Our signature guided journal packed with prompts, affirmations, and creative exercises for ages 6–12.",
       price: "₹599",
-      badge: "Bestseller",
+      badge: null,
       amazonLink: "https://mybook.to/thinkandink-girl",
       images: [girlCover3d, coverFull, girlEdition1, girlEdition2, girlEdition3, girlEdition4, girlEdition5, girlEdition6, girlEdition7],
       icon: BookOpen,
@@ -247,7 +331,7 @@ function ShopPage() {
       title: "Brave • Curious • Me  Boy Edition",
       desc: "Our special edition guided journal packed with prompts, affirmations, and creative exercises for boys ages 6–12.",
       price: "₹599",
-      badge: "Just Launched",
+      badge: null,
       images: [boyEdition1, boyEdition7, boyEdition6, boyEdition8, boyEdition5, boyEdition3, boyEdition4, boyEdition2],
       icon: Flower2,
       penCount: 5,
@@ -257,10 +341,30 @@ function ShopPage() {
       title: "Celebrating You Every Day! Journal",
       desc: "A beautiful self-reflection and happiness planner for mothers. Features Ikigai, weekly planners, and more.",
       price: "₹699",
-      badge: "Launching Offer",
-      launchingOffer: true,
+      badge: null,
+      launchingOffer: false,
       images: [mothersDayCoverView2, celebratingImg7, celebratingImg1, celebratingImg2, celebratingImg3, celebratingImg4, celebratingImg5, celebratingImg6, celebratingImg8, celebratingImg9, celebratingImg10],
       icon: Heart,
+      penCount: 0,
+      bulbCount: 0,
+    },
+    {
+      title: "Brave • Curious • Me  Girl Edition Volume 2",
+      desc: "The highly anticipated sequel to our best-selling girl edition. Packed with all-new guided prompts, gratitude pages, and creative challenges for girls aged 6–12.",
+      price: "₹599",
+      badge: "New Release",
+      images: [girlCoverV23D, girlEditionV2Img1, girlEditionV2Img2, girlEditionV2Img3, girlEditionV2Img4, girlEditionV2Img5, girlEditionV2Img6, girlEditionV2Img7, girlEditionV2Img8, girlEditionV2Img9, girlEditionV2Img10, girlEditionV2Img11, girlEditionV2Img12, girlEditionV2Img13, girlEditionV2Img14, girlEditionV2Img15, girlEditionV2Img16],
+      icon: BookOpen,
+      penCount: 0,
+      bulbCount: 0,
+    },
+    {
+      title: "Brave • Curious • Me  Life Skills Journal Volume 1",
+      desc: "A specialized journal focused on essential life skills, goal setting, emotional growth, and problem-solving exercises for kids.",
+      price: "₹699",
+      badge: "Just Launched",
+      images: [lifeSkillsCoverV1_3d, lifeSkillsImg1, lifeSkillsImg2, lifeSkillsImg3, lifeSkillsImg4, lifeSkillsImg5, lifeSkillsImg6, lifeSkillsImg7, lifeSkillsImg8, lifeSkillsImg9, lifeSkillsImg10, lifeSkillsImg11, lifeSkillsImg12, lifeSkillsImg13],
+      icon: BookOpen,
       penCount: 0,
       bulbCount: 0,
     },
@@ -619,11 +723,17 @@ function ShopPage() {
                       <p className="text-xs text-muted-foreground">{item.price}</p>
                     </div>
                     <div className="flex items-center gap-2 bg-secondary/50 rounded-full px-2 py-1">
-                      <button onClick={() => setShelf(prev => prev.map(p => p.title === item.title ? { ...p, quantity: Math.max(0, p.quantity - 1) } : p).filter(p => p.quantity > 0))} className="text-muted-foreground hover:text-foreground">
+                      <button onClick={() => {
+                        setShelf(prev => prev.map(p => p.title === item.title ? { ...p, quantity: Math.max(0, p.quantity - 1) } : p).filter(p => p.quantity > 0));
+                        trackRemoveFromCart({ title: item.title, price: item.price, quantity: 1 });
+                      }} className="text-muted-foreground hover:text-foreground">
                         <Minus className="w-3 h-3" />
                       </button>
                       <span className="text-xs font-bold w-4 text-center">{item.quantity}</span>
-                      <button onClick={() => setShelf(prev => prev.map(p => p.title === item.title ? { ...p, quantity: p.quantity + 1 } : p))} className="text-muted-foreground hover:text-foreground">
+                      <button onClick={() => {
+                        setShelf(prev => prev.map(p => p.title === item.title ? { ...p, quantity: p.quantity + 1 } : p));
+                        trackAddToCart({ title: item.title, price: item.price, quantity: 1 });
+                      }} className="text-muted-foreground hover:text-foreground">
                         <Plus className="w-3 h-3" />
                       </button>
                     </div>
@@ -637,7 +747,11 @@ function ShopPage() {
                     ₹{shelf.reduce((acc, item) => acc + parseInt(item.price.replace("₹", "")) * item.quantity, 0)}
                   </span>
                 </div>
-                <Button variant="hero" className="w-full" onClick={() => { setIsShelfOpen(false); setIsCheckoutOpen(true); }}>
+                <Button variant="hero" className="w-full" onClick={() => {
+                  setIsShelfOpen(false);
+                  setIsCheckoutOpen(true);
+                  trackBeginCheckout(shelf);
+                }}>
                   Place Order
                 </Button>
               </div>

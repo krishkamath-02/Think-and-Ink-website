@@ -60,7 +60,7 @@ export function Testimonials() {
             <span className="text-xs font-bold text-primary uppercase tracking-widest">The Wall of Love</span>
           </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
-            Trusted by <span className="text-primary italic">Thousands</span> of Families
+            Trusted by <span className="text-primary italic">Hundreds</span> of Families
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
             From bedtime reflections to morning gratitude, see how Think & Ink is making a difference in homes across the country.

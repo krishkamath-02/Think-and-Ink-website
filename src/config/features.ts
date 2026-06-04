@@ -9,4 +9,5 @@ export const FEATURES = {
   SHOW_INSTAGRAM_WALL: false,  // Hide the Instagram Wall of Love on the Homepage
   SHOW_PARENT_CORNER: true,    // Keep the blog section visible (user didn't ask to hide this)
   SHOW_RAZORPAY: true,         // Display the 'Pay Online' button
+  ENABLE_BUNDLE_DISCOUNT: false, // Disable the automatic 10% / 15% bundle offers for now
 };

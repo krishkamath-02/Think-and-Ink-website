@@ -7,7 +7,9 @@ import { Heart, Sparkles, BookOpen, Brain, Palette, Star, Smile, ShieldCheck, Li
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-lifestyle.png";
 import coverGirl from "@/assets/product-mockup-3d.png";
+import coverGirlV2 from "@/assets/girl-edition/volume 2/product-mockup-girl-v2-3d.png";
 import coverBoy from "@/assets/product-mockup-boy-3d.png";
+import coverLifeSkills from "@/assets/life skills/product-mockup-lifeskills-v1-3d.png";
 import coverCelebratingYou from "@/assets/mothers-day/Mothers-day-cover.png";
 import journalIllustration from "@/assets/journal-illustration.png";
 // import mothersDayCover from "@/assets/mothers-day/mothers-day-journal-regular.png";
@@ -42,6 +44,39 @@ import boyInside5 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 2
 import boyInside6 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16 (2).jpeg";
 import boyInside7 from "@/assets/boy-edition/book/WhatsApp Image 2026-04-21 at 22.01.16.jpeg";
 
+// Girl Edition Volume 2
+import girlEditionV2Img1 from "@/assets/girl-edition/volume 2/1.jpg";
+import girlEditionV2Img15 from "@/assets/girl-edition/volume 2/5.jpg";
+import girlEditionV2Img16 from "@/assets/girl-edition/volume 2/9.jpg";
+import girlEditionV2Img2 from "@/assets/girl-edition/volume 2/10.jpg";
+import girlEditionV2Img3 from "@/assets/girl-edition/volume 2/11.jpg";
+import girlEditionV2Img4 from "@/assets/girl-edition/volume 2/14.jpg";
+import girlEditionV2Img5 from "@/assets/girl-edition/volume 2/16.jpg";
+import girlEditionV2Img6 from "@/assets/girl-edition/volume 2/17.jpg";
+import girlEditionV2Img7 from "@/assets/girl-edition/volume 2/22.jpg";
+import girlEditionV2Img8 from "@/assets/girl-edition/volume 2/30.jpg";
+import girlEditionV2Img9 from "@/assets/girl-edition/volume 2/32.jpg";
+import girlEditionV2Img10 from "@/assets/girl-edition/volume 2/37.jpg";
+import girlEditionV2Img11 from "@/assets/girl-edition/volume 2/40.jpg";
+import girlEditionV2Img12 from "@/assets/girl-edition/volume 2/52.jpg";
+import girlEditionV2Img13 from "@/assets/girl-edition/volume 2/62.jpg";
+import girlEditionV2Img14 from "@/assets/girl-edition/volume 2/72.jpg";
+
+// Life Skills Journal Previews
+import lifeSkillsImg1 from "@/assets/life skills/1.jpg";
+import lifeSkillsImg2 from "@/assets/life skills/3.jpg";
+import lifeSkillsImg3 from "@/assets/life skills/4.jpg";
+import lifeSkillsImg4 from "@/assets/life skills/7.jpg";
+import lifeSkillsImg5 from "@/assets/life skills/9.jpg";
+import lifeSkillsImg6 from "@/assets/life skills/11.jpg";
+import lifeSkillsImg7 from "@/assets/life skills/31.jpg";
+import lifeSkillsImg8 from "@/assets/life skills/32.jpg";
+import lifeSkillsImg9 from "@/assets/life skills/35.jpg";
+import lifeSkillsImg10 from "@/assets/life skills/53.jpg";
+import lifeSkillsImg11 from "@/assets/life skills/62.jpg";
+import lifeSkillsImg12 from "@/assets/life skills/66.jpg";
+import lifeSkillsImg13 from "@/assets/life skills/81.jpg";
+
 // Celebrating You Every Day
 import celebratingImg1 from "@/assets/celebrating-you/Celebrating_you_image_1.jpeg";
 import celebratingImg2 from "@/assets/celebrating-you/Celebrating_you_image_2.jpeg";
@@ -61,26 +96,44 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [activeEdition, setActiveEdition] = useState<'girl' | 'boy' | 'celebratingYou'>('girl');
+  const [activeEdition, setActiveEdition] = useState<'girl' | 'girlV2' | 'boy' | 'lifeSkills' | 'celebratingYou'>('girl');
   // const [mothersDayCustomized, setMothersDayCustomized] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<{ title: string; price: string } | null>(null);
   const [currentIndex, setCurrentIndex] = useState(2);
 
-  useEffect(() => {
-    // Focus on the middle/3rd image (index 2) by default
-    setCurrentIndex(2);
-  }, [activeEdition]);
-
-  const girlPages = [girlInside3, girlInside4, girlIntro, girlInside5, girlInside6, girlInside7];
-  const boyPages = [boyInside5, boyInside4, boyIntro, boyInside2, readingCorner, boyInside1];
+  const girlPages = [girlInside3, girlInside4, girlInside5, girlIntro, girlInside6, girlInside7];
+  const girlV2Pages = [girlEditionV2Img2, girlEditionV2Img3, girlEditionV2Img4, girlEditionV2Img5, girlEditionV2Img6, girlEditionV2Img7, girlEditionV2Img8, girlEditionV2Img9, girlEditionV2Img1, girlEditionV2Img10, girlEditionV2Img11, girlEditionV2Img12, girlEditionV2Img13, girlEditionV2Img14, girlEditionV2Img15, girlEditionV2Img16];
+  const boyPages = [boyInside5, boyInside4, boyInside2, boyIntro, readingCorner, boyInside1];
   // const mothersDayPages = [mothersDayInside1, mothersDayInside2, mothersDayCustomized ? mothersDayCustomizedCover : mothersDayCover, mothersDayInside3, mothersDayInside4];
-  const celebratingYou = [celebratingImg1, celebratingImg2, celebratingImg8, celebratingImg5, celebratingImg3, celebratingImg4, celebratingImg6, celebratingImg7, celebratingImg9, celebratingImg10, celebratingImg11, celebratingImg12];
+  const celebratingYou = [celebratingImg1, celebratingImg2, celebratingImg5, celebratingImg3, celebratingImg4, celebratingImg6, celebratingImg8, celebratingImg7, celebratingImg9, celebratingImg10, celebratingImg11, celebratingImg12];
+  const lifeSkillsPages = [
+    lifeSkillsImg2,
+    lifeSkillsImg3,
+    lifeSkillsImg4,
+    lifeSkillsImg5,
+    lifeSkillsImg6,
+    lifeSkillsImg7,
+    lifeSkillsImg1,
+    lifeSkillsImg8,
+    lifeSkillsImg9,
+    lifeSkillsImg10,
+    lifeSkillsImg11,
+    lifeSkillsImg12,
+    lifeSkillsImg13,
+  ];
 
   const activePages =
     activeEdition === 'girl' ? girlPages :
-      activeEdition === 'boy' ? boyPages :
-        activeEdition === 'celebratingYou' ? celebratingYou :
-          girlPages;
+      activeEdition === 'girlV2' ? girlV2Pages :
+        activeEdition === 'boy' ? boyPages :
+          activeEdition === 'lifeSkills' ? lifeSkillsPages :
+            activeEdition === 'celebratingYou' ? celebratingYou :
+              girlPages;
+
+  useEffect(() => {
+    // Focus on the middle image by default
+    setCurrentIndex(Math.floor(activePages.length / 2));
+  }, [activeEdition, activePages.length]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -126,15 +179,15 @@ function Index() {
               {/* Shared glow */}
               <div className="absolute -inset-6 bg-gradient-to-br from-primary/20 via-amber/15 to-teal/20 rounded-3xl blur-3xl" />
 
-              {/* Girl Edition */}
+              {/* Girl Edition Vol 2 */}
               <div className="relative flex flex-col items-center">
                 <div className="absolute -top-5 -left-3 bg-primary text-primary-foreground rounded-xl px-3 py-1 shadow-lg text-[10px] font-bold uppercase tracking-wide z-10">
-                  🌸 Girl
+                  🌸 Girl Vol 2
                 </div>
                 <div className="img-protect w-28 md:w-40 rounded-2xl">
                   <img
-                    src={coverGirl}
-                    alt="Brave Curious Me — Girl Edition journal 3D mockup"
+                    src={coverGirlV2}
+                    alt="Brave Curious Me — Girl Edition Vol 2 journal 3D mockup"
                     className="relative w-full drop-shadow-2xl animate-float"
                     width={160}
                     height={160}
@@ -142,15 +195,15 @@ function Index() {
                 </div>
               </div>
 
-              {/* Boy Edition */}
+              {/* Life Skills Journal Vol 1 */}
               <div className="relative flex flex-col items-center">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-teal text-teal-foreground rounded-xl px-3 py-1 shadow-lg text-[10px] font-bold uppercase tracking-wide z-10 whitespace-nowrap">
-                  🚀 Boy
+                  🧠 Life Skills
                 </div>
                 <div className="img-protect w-28 md:w-40 rounded-2xl">
                   <img
-                    src={coverBoy}
-                    alt="Brave Curious Me — Boy Edition journal 3D mockup"
+                    src={coverLifeSkills}
+                    alt="Brave Curious Me — Life Skills Journal Vol 1 3D mockup"
                     className="relative w-full drop-shadow-2xl animate-float animation-delay-400 rounded-lg"
                     width={160}
                     height={160}
@@ -161,7 +214,7 @@ function Index() {
               {/* Celebrating You Edition */}
               <div className="relative flex flex-col items-center">
                 <div className="absolute -top-5 -right-3 bg-amber text-amber-foreground rounded-xl px-3 py-1 shadow-lg text-[10px] font-bold uppercase tracking-wide z-10 whitespace-nowrap">
-                  💝 New!
+                  💝 Mom's Journal
                 </div>
                 <div className="img-protect w-28 md:w-40 rounded-2xl">
                   <img
@@ -171,10 +224,6 @@ function Index() {
                     width={160}
                     height={160}
                   />
-                </div>
-                <div className="absolute -bottom-4 -right-4 bg-amber text-amber-foreground rounded-2xl px-3 py-1.5 shadow-lg animate-sparkle animation-delay-600 z-10">
-                  <Star className="w-4 h-4 inline mr-1" />
-                  <span className="text-xs font-bold">Just Launched!</span>
                 </div>
               </div>
 
@@ -198,78 +247,80 @@ function Index() {
       </section>
 
       {/* ─── Bundle & Save Promo Banner ─── */}
-      <section className="py-20 bg-gradient-to-br from-teal/5 via-primary/5 to-amber/5 relative overflow-hidden">
-        {/* Decorative blobs */}
-        <div className="absolute top-0 right-0 w-72 h-72 bg-teal/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-amber/10 blur-3xl rounded-full translate-y-1/2 -translate-x-1/3" />
+      {FEATURES.ENABLE_BUNDLE_DISCOUNT && (
+        <section className="py-20 bg-gradient-to-br from-teal/5 via-primary/5 to-amber/5 relative overflow-hidden">
+          {/* Decorative blobs */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-teal/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-amber/10 blur-3xl rounded-full translate-y-1/2 -translate-x-1/3" />
 
-        <div className="mx-auto max-w-7xl px-6 relative z-10">
-          <Reveal className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-4 py-1.5 mb-6">
-              <Gift className="w-4 h-4 text-teal" />
-              <span className="text-xs font-bold text-teal uppercase tracking-wider">Limited-Time Offer</span>
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
-              Bundle & <span className="text-teal">Save</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Mix and match any of our journals — the more you add, the more you save!
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* 10% Bundle */}
-            <Reveal delay={0.1}>
-              <div className="group relative bg-card rounded-3xl p-8 border border-border/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-                <div className="absolute top-0 right-0 bg-teal text-teal-foreground px-5 py-1.5 rounded-bl-2xl text-xs font-black uppercase tracking-wider">
-                  10% Off
-                </div>
-                <div className="w-14 h-14 bg-teal/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Gift className="w-7 h-7 text-teal" />
-                </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-3">Pick Any 2</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Add any <strong>2 different journals</strong> to your shelf and get <span className="font-bold text-teal">10% off</span> your entire order. Mix kids' and adults' editions however you like!
-                </p>
-                <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🌸 Girl</span>
-                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🚀 Boy</span>
-                  <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">💝 Celebrating You</span>
-                </div>
+          <div className="mx-auto max-w-7xl px-6 relative z-10">
+            <Reveal className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-4 py-1.5 mb-6">
+                <Gift className="w-4 h-4 text-teal" />
+                <span className="text-xs font-bold text-teal uppercase tracking-wider">Limited-Time Offer</span>
               </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
+                Bundle & <span className="text-teal">Save</span>
+              </h2>
+              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                Mix and match any of our journals — the more you add, the more you save!
+              </p>
             </Reveal>
 
-            {/* 15% Bundle */}
-            <Reveal delay={0.2}>
-              <div className="group relative bg-card rounded-3xl p-8 border-2 border-amber/30 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-                <div className="absolute top-0 right-0 bg-amber text-amber-foreground px-5 py-1.5 rounded-bl-2xl text-xs font-black uppercase tracking-wider">
-                  15% Off ★
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* 10% Bundle */}
+              <Reveal delay={0.1}>
+                <div className="group relative bg-card rounded-3xl p-8 border border-border/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-teal text-teal-foreground px-5 py-1.5 rounded-bl-2xl text-xs font-black uppercase tracking-wider">
+                    10% Off
+                  </div>
+                  <div className="w-14 h-14 bg-teal/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <Gift className="w-7 h-7 text-teal" />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-3">Pick Any 2</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Add any <strong>2 different journals</strong> to your shelf and get <span className="font-bold text-teal">10% off</span> your entire order. Mix kids' and adults' editions however you like!
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🌸 Girl</span>
+                    <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">🚀 Boy</span>
+                    <span className="inline-flex items-center gap-1 bg-secondary/50 px-3 py-1 rounded-full">💝 Celebrating You</span>
+                  </div>
                 </div>
-                <div className="w-14 h-14 bg-amber/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Sparkles className="w-7 h-7 text-amber" />
+              </Reveal>
+
+              {/* 15% Bundle */}
+              <Reveal delay={0.2}>
+                <div className="group relative bg-card rounded-3xl p-8 border-2 border-amber/30 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-amber text-amber-foreground px-5 py-1.5 rounded-bl-2xl text-xs font-black uppercase tracking-wider">
+                    15% Off ★
+                  </div>
+                  <div className="w-14 h-14 bg-amber/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <Sparkles className="w-7 h-7 text-amber" />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-3">Get Any 3 or More</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Add any <strong>3 or more unique journals</strong> to your shelf and enjoy <span className="font-bold text-amber">15% off</span> the entire order. Mix and match kids and adults editions!
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1 bg-amber/10 px-3 py-1 rounded-full font-semibold text-amber-900">🎁 Maximum Bundle Discount!</span>
+                  </div>
                 </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-3">Get All 3</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                  Add all three journals — <strong>Girl Edition</strong> + <strong>Boy Edition</strong> + <strong>Celebrating You Every Day!</strong> — and enjoy <span className="font-bold text-amber">15% off</span> the entire order. The ultimate Think & Ink family set!
-                </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1 bg-amber/10 px-3 py-1 rounded-full font-semibold text-amber-900">🌸 + 🚀 + 💝 All Three!</span>
-                </div>
-              </div>
+              </Reveal>
+            </div>
+
+            <Reveal delay={0.3} className="mt-12 text-center">
+              <Link to="/shop">
+                <Button variant="hero" size="lg" className="text-base px-10 py-6">
+                  <Gift className="w-5 h-5 mr-2" />
+                  Shop the Bundle
+                </Button>
+              </Link>
+              <p className="mt-4 text-xs text-muted-foreground">Discount applies automatically at checkout when qualifying items are in your shelf.</p>
             </Reveal>
           </div>
-
-          <Reveal delay={0.3} className="mt-12 text-center">
-            <Link to="/shop">
-              <Button variant="hero" size="lg" className="text-base px-10 py-6">
-                <Gift className="w-5 h-5 mr-2" />
-                Shop the Bundle
-              </Button>
-            </Link>
-            <p className="mt-4 text-xs text-muted-foreground">Discount applies automatically at checkout when qualifying items are in your shelf.</p>
-          </Reveal>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Features / Promise */}
       <section className="py-24 bg-warm">
@@ -357,33 +408,22 @@ function Index() {
 
           {/* Tab Switcher */}
           <Reveal delay={0.1} className="flex justify-center mb-16">
-            <div className="inline-flex bg-background p-1.5 rounded-full border border-border/50 shadow-sm relative w-[360px] md:w-[420px]">
-              <div
-                className="absolute inset-y-1.5 rounded-full transition-all duration-300 ease-out"
-                style={{
-                  width: 'calc(33.333% - 6px)',
-                  left: activeEdition === 'girl' ? '6px' : activeEdition === 'boy' ? '33.333%' : '66.666%',
-                  backgroundColor: activeEdition === 'girl' ? 'hsl(var(--primary) / 0.1)' : activeEdition === 'boy' ? 'hsl(var(--teal) / 0.1)' : 'hsl(var(--amber) / 0.1)',
-                }}
-              />
-              <button
-                onClick={() => setActiveEdition('girl')}
-                className={`flex-1 relative py-2.5 rounded-full text-[10px] md:text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'girl' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
-              >
-                🌸 Girl
-              </button>
-              <button
-                onClick={() => setActiveEdition('boy')}
-                className={`flex-1 relative py-2.5 rounded-full text-[10px] md:text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'boy' ? 'text-teal' : 'text-muted-foreground hover:text-foreground'}`}
-              >
-                🚀 Boy
-              </button>
-              <button
-                onClick={() => setActiveEdition('celebratingYou')}
-                className={`flex-1 relative py-2.5 rounded-full text-[10px] md:text-sm font-semibold transition-colors z-10 flex items-center justify-center gap-2 ${activeEdition === 'celebratingYou' ? 'text-amber-600' : 'text-muted-foreground hover:text-foreground'}`}
-              >
-                💝 Celebrating You
-              </button>
+            <div className="inline-flex flex-wrap md:flex-nowrap bg-background p-1.5 rounded-3xl md:rounded-full border border-border/50 shadow-sm relative max-w-full justify-center gap-1.5">
+              {[
+                { id: 'girl', label: '🌸 Girl Vol 1', color: 'text-primary', activeBg: 'bg-primary/10' },
+                { id: 'girlV2', label: '🌸 Girl Vol 2', color: 'text-primary', activeBg: 'bg-primary/10' },
+                { id: 'boy', label: '🚀 Boy Vol 1', color: 'text-teal', activeBg: 'bg-teal/10' },
+                { id: 'lifeSkills', label: '🧠 Life Skills', color: 'text-emerald-600', activeBg: 'bg-emerald-50' },
+                { id: 'celebratingYou', label: '💝 Celebrating You', color: 'text-amber-600', activeBg: 'bg-amber/10' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveEdition(tab.id as any)}
+                  className={`px-4 py-2.5 rounded-full text-xs font-semibold transition-all duration-300 ${activeEdition === tab.id ? `${tab.color} ${tab.activeBg} shadow-sm scale-105` : 'text-muted-foreground hover:text-foreground'}`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
           </Reveal>
 
@@ -434,17 +474,17 @@ function Index() {
                           mass: 1
                         }}
                         onClick={() => setCurrentIndex(i)}
-                        className="absolute w-[220px] md:w-[300px] aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-border/40 cursor-pointer origin-center"
+                        className="absolute w-[220px] md:w-[300px] h-auto rounded-2xl overflow-hidden shadow-2xl border border-border/40 cursor-pointer origin-center bg-transparent"
                         style={{
                           zIndex: 100 - Math.abs(offset),
                           transformStyle: "preserve-3d"
                         }}
                       >
-                        <div className="img-protect w-full h-full">
+                        <div className="img-protect w-full h-full bg-transparent flex items-center justify-center">
                           <img
                             src={img}
                             alt={`${activeEdition} edition page ${i + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain rounded-2xl"
                             loading="lazy"
                           />
                         </div>

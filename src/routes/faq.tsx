@@ -23,11 +23,11 @@ const faqs = [
     items: [
       {
         q: "What journals do you offer?",
-        a: "We currently offer three journals:\n\n• Brave • Curious • Me — Girl Edition (ages 6–12)\n• Brave • Curious • Me — Boy Edition (ages 6–12)\n• Celebrating You Every Day! — A self-reflection & happiness planner designed for adults (mothers, women, and anyone who values self-care).",
+        a: "We currently offer five journals:\n\n• Brave • Curious • Me — Girl Edition Vol 1 (ages 6–12)\n• Brave • Curious • Me — Girl Edition Vol 2 (ages 6–12)\n• Brave • Curious • Me — Boy Edition Vol 1 (ages 6–12)\n• Brave • Curious • Me — Life Skills Journal Vol 1 (ages 6–12)\n• Celebrating You Every Day! — A self-reflection & happiness planner designed for adults (mothers, women, and anyone who values self-care).",
       },
       {
         q: "What age group are the kids' journals designed for?",
-        a: "The Brave • Curious • Me journals (Girl & Boy Editions) are designed for kids aged 6–12. The prompts are thoughtfully crafted to be simple enough for early readers yet engaging enough for older children.",
+        a: "The Brave • Curious • Me journals (Girl, Boy, and Life Skills Editions) are designed for kids aged 6–12. The prompts are thoughtfully crafted to be simple enough for early readers yet engaging enough for older children.",
       },
       {
         q: "What's inside the kids' journals?",
@@ -52,7 +52,7 @@ const faqs = [
     items: [
       {
         q: "What is the Bundle & Save offer?",
-        a: "Buy more, save more! When you add multiple different journals to your shelf, discounts apply automatically:\n\n• Any 2 different books — 10% off your entire order\n• All 3 different books — 15% off your entire order\n\nMix and match kids' and adults' editions however you like!",
+        a: "Buy more, save more! When you add multiple different journals to your shelf, discounts apply automatically:\n\n• Any 2 different books — 10% off your entire order\n• Any 3 or more different books — 15% off your entire order\n\nMix and match kids' and adults' editions however you like!",
       },
       {
         q: "Which combinations qualify for the discount?",
@@ -133,6 +133,8 @@ const faqs = [
   },
 ];
 
+import { FEATURES } from "@/config/features";
+
 function AccordionItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
@@ -179,16 +181,18 @@ function FAQPage() {
       {/* FAQ Accordion */}
       <section className="py-20">
         <div className="mx-auto max-w-3xl px-6 space-y-12">
-          {faqs.map((section, si) => (
-            <Reveal key={section.category} delay={si * 0.05}>
-              <h2 className="font-display text-2xl font-bold text-foreground mb-5">{section.category}</h2>
-              <div className="space-y-3">
-                {section.items.map((item) => (
-                  <AccordionItem key={item.q} q={item.q} a={item.a} />
-                ))}
-              </div>
-            </Reveal>
-          ))}
+          {faqs
+            .filter((section) => section.category !== "Bundle Discounts" || FEATURES.ENABLE_BUNDLE_DISCOUNT)
+            .map((section, si) => (
+              <Reveal key={section.category} delay={si * 0.05}>
+                <h2 className="font-display text-2xl font-bold text-foreground mb-5">{section.category}</h2>
+                <div className="space-y-3">
+                  {section.items.map((item) => (
+                    <AccordionItem key={item.q} q={item.q} a={item.a} />
+                  ))}
+                </div>
+              </Reveal>
+            ))}
         </div>
       </section>
 

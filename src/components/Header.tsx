@@ -21,18 +21,32 @@ export function Header() {
 
   const kidsCollections = [
     {
-      label: "Girl Edition",
+      label: "Girl Edition Vol 1",
       sublabel: "Brave • Curious • Me",
       emoji: "🌸",
       href: "/shop",
       badge: null,
     },
     {
-      label: "Boy Edition",
+      label: "Girl Edition Vol 2",
+      sublabel: "Brave • Curious • Me",
+      emoji: "🌸",
+      href: "/shop",
+      badge: "New",
+    },
+    {
+      label: "Boy Edition Vol 1",
       sublabel: "Brave • Curious • Me",
       emoji: "🚀",
       href: "/shop",
       badge: null,
+    },
+    {
+      label: "Life Skills Journal Vol 1",
+      sublabel: "Brave • Curious • Me",
+      emoji: "🧠",
+      href: "/shop",
+      badge: "New",
     },
   ];
 
@@ -42,7 +56,7 @@ export function Header() {
       sublabel: "Self-Reflection Journal",
       emoji: "💝",
       href: "/shop",
-      badge: "Just Launched",
+      badge: null,
     },
   ];
 

@@ -1,8 +1,15 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { X, MessageCircle, Loader2, CheckCircle, MapPin, User, Phone, Hash, Package, Heart, Sparkles, CreditCard, Plus, Trash2, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FEATURES } from "@/config/features";
 import { Zap } from "lucide-react";
+import { 
+  trackBeginCheckout, 
+  trackAddShippingInfo, 
+  trackAddPaymentInfo, 
+  trackPurchase, 
+  trackCheckoutCancellation 
+} from "@/lib/analytics";
 
 // ─── BUNDLE DISCOUNT CONSTANTS ─────────────────────────────────────────────────
 const BUNDLE_DISCOUNT_TWO = 0.10; // 10% off when buying any 2 different books
@@ -56,10 +63,49 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     siblingBundle: false,
   });
 
+  // ─── ANALYTICS CANCELLATION TRACKING ────────────────────────────────────────
+  const cancellationTrackedRef = useRef(false);
+  const isCompletedRef = useRef(false);
+
+  const trackCancellationOnce = (step: "form_closed" | "payment_failed_or_dismissed" | "unmounted_incomplete", reason: string) => {
+    if (!cancellationTrackedRef.current && !isCompletedRef.current) {
+      trackCheckoutCancellation(step, shelf, reason);
+      cancellationTrackedRef.current = true;
+    }
+  };
+
+  const handleClose = (reason: string = "user_clicked_close") => {
+    if (status !== "success") {
+      trackCancellationOnce("form_closed", reason);
+    }
+    onClose();
+  };
+
+  // Track begin checkout on mount
+  useEffect(() => {
+    trackBeginCheckout(shelf);
+    return () => {
+      // Trigger cancellation tracking if modal unmounts without successful checkout
+      if (!isCompletedRef.current) {
+        trackCancellationOnce("unmounted_incomplete", "modal_unmounted");
+      }
+    };
+  }, []);
+
+  // Update success flag when status changes to 'success'
+  useEffect(() => {
+    if (status === "success") {
+      isCompletedRef.current = true;
+    }
+  }, [status]);
+
   // ─── BUNDLE DISCOUNT LOGIC ──────────────────────────────────────────────────
   const uniqueTitles = useMemo(() => new Set(shelf.map(item => item.title)).size, [shelf]);
 
   const bundleInfo = useMemo(() => {
+    if (!FEATURES.ENABLE_BUNDLE_DISCOUNT) {
+      return { discount: 0, label: "", description: "" };
+    }
     if (uniqueTitles >= 3) {
       return { discount: BUNDLE_DISCOUNT_THREE, label: "15% Bundle Discount", description: "3 different books in your shelf — maximum bundle applied!" };
     } else if (uniqueTitles === 2) {
@@ -70,6 +116,7 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
 
   // Upsell suggestion when user could unlock a bigger discount
   const bundleSuggestion = useMemo(() => {
+    if (!FEATURES.ENABLE_BUNDLE_DISCOUNT) return null;
     if (uniqueTitles >= 3) return null; // Already at max discount
     if (uniqueTitles === 2) {
       return "Add a third book to unlock 15% off the entire order!";
@@ -182,6 +229,8 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
                 console.error("Failed to log to Google Sheets", e);
               }
 
+              trackPurchase(orderId, total, "Razorpay", shelf);
+
               const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
                 buildWhatsAppMessage(form, orderId) + `\n\n*Payment ID:* ${response.razorpay_payment_id}\n*Razorpay Order ID:* ${response.razorpay_order_id}`
               )}`;
@@ -190,10 +239,12 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
             } else {
               setErrorMsg("Payment verification failed. Please contact support.");
               setStatus("error");
+              trackCancellationOnce("payment_failed_or_dismissed", "payment_verification_failed");
             }
           } catch (err) {
             setErrorMsg("Verification error. Please contact support.");
             setStatus("error");
+            trackCancellationOnce("payment_failed_or_dismissed", "payment_verification_exception");
           }
         },
         prefill: {
@@ -204,17 +255,24 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
         theme: {
           color: "#E28E73",
         },
+        modal: {
+          ondismiss: function () {
+            trackCancellationOnce("payment_failed_or_dismissed", "razorpay_modal_dismissed");
+          }
+        }
       };
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on('payment.failed', function (response: any) {
         setErrorMsg("Payment failed: " + response.error.description);
         setStatus("error");
+        trackCancellationOnce("payment_failed_or_dismissed", response.error.description || "razorpay_payment_failed");
       });
       rzp.open();
     } catch (err: any) {
       setErrorMsg(err.message || "Could not initialize payment");
       setStatus("error");
+      trackCancellationOnce("payment_failed_or_dismissed", err.message || "razorpay_initiation_failed");
     }
   };
 
@@ -290,6 +348,10 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
       paymentMethod: method,
     };
 
+    // Track shipping and payment method selection
+    trackAddShippingInfo(deliveryType === "quick" ? "Same Day (Quick)" : "Regular", shelf);
+    trackAddPaymentInfo(method === 'razorpay' ? "Razorpay" : "WhatsApp", shelf);
+
     try {
       if (method === 'razorpay') {
         // Do not log to Google Sheets yet. Wait for successful payment.
@@ -304,6 +366,9 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
           body: JSON.stringify(payload),
         });
 
+        // Track purchase success for WhatsApp
+        trackPurchase(orderId, total, "WhatsApp", shelf);
+
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage(form, orderId))}`;
         setWhatsAppUrl(url);
         setStatus("success");
@@ -311,13 +376,14 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     } catch {
       setStatus("error");
       setErrorMsg("Something went wrong. Please try again or contact us directly on WhatsApp.");
+      trackCancellationOnce("payment_failed_or_dismissed", "whatsapp_api_error");
     }
   };
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onClick={(e) => e.target === e.currentTarget && handleClose("overlay_click")}
     >
       <div className="relative bg-card w-full max-w-lg rounded-3xl shadow-2xl border border-border/50 overflow-hidden max-h-[90vh] overflow-y-auto">
 
@@ -328,7 +394,7 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
             <p className="text-sm text-muted-foreground mt-0.5">Choose your checkout method below</p>
           </div>
           <button
-            onClick={onClose}
+            onClick={() => handleClose("close_button_click")}
             className="p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
           >
             <X className="w-5 h-5" />
