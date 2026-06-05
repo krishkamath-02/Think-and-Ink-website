@@ -62,6 +62,8 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
     sketchPens: false,
     siblingBundle: false,
   });
+  const [submitMethod, setSubmitMethod] = useState<'whatsapp' | 'razorpay' | null>(null);
+  const [completedMethod, setCompletedMethod] = useState<'whatsapp' | 'razorpay' | null>(null);
 
   // ─── ANALYTICS CANCELLATION TRACKING ────────────────────────────────────────
   const cancellationTrackedRef = useRef(false);
@@ -234,8 +236,12 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
               const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
                 buildWhatsAppMessage(form, orderId) + `\n\n*Payment ID:* ${response.razorpay_payment_id}\n*Razorpay Order ID:* ${response.razorpay_order_id}`
               )}`;
+              setCompletedMethod('razorpay');
               setWhatsAppUrl(url);
               setStatus("success");
+              
+              // Automatically redirect to WhatsApp
+              window.location.href = url;
             } else {
               setErrorMsg("Payment verification failed. Please contact support.");
               setStatus("error");
@@ -370,8 +376,12 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
         trackPurchase(orderId, total, "WhatsApp", shelf);
 
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage(form, orderId))}`;
+        setCompletedMethod('whatsapp');
         setWhatsAppUrl(url);
         setStatus("success");
+
+        // Automatically redirect to WhatsApp
+        window.location.href = url;
       }
     } catch {
       setStatus("error");
@@ -407,12 +417,12 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
               <CheckCircle className="w-10 h-10 text-teal" />
             </div>
             <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-              {whatsAppUrl ? "Order Registered! 🎉" : "Payment Successful! 🎉"}
+              {completedMethod === "razorpay" ? "Payment Successful! 🎉" : "Order Registered! 🎉"}
             </h3>
             <p className="text-muted-foreground leading-relaxed max-w-sm mb-8">
-              {whatsAppUrl 
-                ? "Click below to complete your payment on WhatsApp or share the confirmation."
-                : "Your order has been placed successfully and sent to our shipping partner."}
+              {completedMethod === "razorpay"
+                ? "Your payment was verified. Click below to share your order details on WhatsApp so we can process it immediately."
+                : "Click below to complete your payment on WhatsApp or share the confirmation."}
             </p>
             {whatsAppUrl && (
               <Button
@@ -428,7 +438,14 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
             <button onClick={onClose} className="text-sm text-muted-foreground">{whatsAppUrl ? "Close" : "Return to Shop"}</button>
           </div>
         ) : (
-          <form className="px-7 py-6 space-y-5">
+          <form 
+            onSubmit={(e) => {
+              if (submitMethod) {
+                handleSubmit(e, submitMethod);
+              }
+            }} 
+            className="px-7 py-6 space-y-5"
+          >
             <div className="grid grid-cols-2 gap-4">
               <input name="firstName" required value={form.firstName} onChange={handleChange} placeholder="First Name" className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm" />
               <input name="lastName" required value={form.lastName} onChange={handleChange} placeholder="Last Name" className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm" />
@@ -562,11 +579,23 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
 
             <div className={`grid grid-cols-1 ${FEATURES.SHOW_RAZORPAY ? 'sm:grid-cols-2' : ''} gap-3 pt-2`}>
               {FEATURES.SHOW_RAZORPAY && (
-                <Button type="button" variant="hero" disabled={status === "submitting"} onClick={(e) => handleSubmit(e, 'razorpay')} className="w-full">
+                <Button 
+                  type="submit" 
+                  variant="hero" 
+                  disabled={status === "submitting"} 
+                  onClick={() => setSubmitMethod('razorpay')} 
+                  className="w-full"
+                >
                   <CreditCard className="w-4 h-4 mr-2" /> Pay Online
                 </Button>
               )}
-              <Button type="button" variant={FEATURES.SHOW_RAZORPAY ? "outline" : "hero"} disabled={status === "submitting"} onClick={(e) => handleSubmit(e, 'whatsapp')} className={`w-full ${FEATURES.SHOW_RAZORPAY ? 'border-primary/30 text-primary' : ''}`}>
+              <Button 
+                type="submit" 
+                variant={FEATURES.SHOW_RAZORPAY ? "outline" : "hero"} 
+                disabled={status === "submitting"} 
+                onClick={() => setSubmitMethod('whatsapp')} 
+                className={`w-full ${FEATURES.SHOW_RAZORPAY ? 'border-primary/30 text-primary' : ''}`}
+              >
                 <MessageCircle className="w-4 h-4 mr-2" /> {FEATURES.SHOW_RAZORPAY ? 'Pay via WhatsApp' : 'Confirm on WhatsApp'}
               </Button>
             </div>

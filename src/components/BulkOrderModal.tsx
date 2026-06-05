@@ -73,6 +73,9 @@ export function BulkOrderModal({ onClose }: BulkOrderModalProps) {
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     setWhatsAppUrl(url);
+    
+    // Automatically redirect to WhatsApp
+    window.location.href = url;
   };
 
   return (
