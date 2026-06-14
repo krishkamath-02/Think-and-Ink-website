@@ -201,36 +201,22 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
         image: "/favicon.svg",
         handler: async function (response: any) {
           try {
-            // 2. Verify Payment Backend Call
+            // 2. Verify Payment Backend Call & Log to Google Sheets server-side
             const verifyRes = await fetch('/api/verify-payment', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
+                razorpay_signature: response.razorpay_signature,
+                orderPayload: payload,
+                appsScriptUrl: APPS_SCRIPT_URL
               })
             });
             
             const verifyData = await verifyRes.json();
             
             if (verifyRes.ok && verifyData.success) {
-              // 3. Log the successful order to Google Apps Script
-              try {
-                await fetch(APPS_SCRIPT_URL, {
-                  method: "POST",
-                  mode: "no-cors",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    ...payload,
-                    paymentMethod: "Razorpay (Paid)",
-                    razorpayPaymentId: response.razorpay_payment_id
-                  }),
-                });
-              } catch (e) {
-                console.error("Failed to log to Google Sheets", e);
-              }
-
               trackPurchase(orderId, total, "Razorpay", shelf);
 
               const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -241,7 +227,11 @@ export function OrderModal({ shelf, onClose }: OrderModalProps) {
               setStatus("success");
               
               // Automatically redirect to WhatsApp
-              window.location.href = url;
+              try {
+                window.location.href = url;
+              } catch (e) {
+                console.error("Failed to redirect automatically:", e);
+              }
             } else {
               setErrorMsg("Payment verification failed. Please contact support.");
               setStatus("error");

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ParentsCornerRouteImport } from './routes/parents-corner'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -30,6 +31,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const ParentsCornerRoute = ParentsCornerRouteImport.update({
   id: '/parents-corner',
   path: '/parents-corner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
   '/parents-corner': typeof ParentsCornerRoute
   '/privacy': typeof PrivacyRoute
   '/shop': typeof ShopRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
   '/parents-corner': typeof ParentsCornerRoute
   '/privacy': typeof PrivacyRoute
   '/shop': typeof ShopRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
   '/parents-corner': typeof ParentsCornerRoute
   '/privacy': typeof PrivacyRoute
   '/shop': typeof ShopRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/faq'
+    | '/gallery'
     | '/parents-corner'
     | '/privacy'
     | '/shop'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/faq'
+    | '/gallery'
     | '/parents-corner'
     | '/privacy'
     | '/shop'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/faq'
+    | '/gallery'
     | '/parents-corner'
     | '/privacy'
     | '/shop'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  GalleryRoute: typeof GalleryRoute
   ParentsCornerRoute: typeof ParentsCornerRoute
   PrivacyRoute: typeof PrivacyRoute
   ShopRoute: typeof ShopRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/parents-corner'
       fullPath: '/parents-corner'
       preLoaderRoute: typeof ParentsCornerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  GalleryRoute: GalleryRoute,
   ParentsCornerRoute: ParentsCornerRoute,
   PrivacyRoute: PrivacyRoute,
   ShopRoute: ShopRoute,

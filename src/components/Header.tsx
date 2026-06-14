@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronDown, BookOpen, Sparkles } from "lucide-react";
 import logoColor from "@/assets/logo/logo-color.png";
+import { FEATURES } from "@/config/features";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -25,7 +26,7 @@ export function Header() {
       sublabel: "Brave • Curious • Me",
       emoji: "🌸",
       href: "/shop",
-      badge: null,
+      badge: "Sold Out",
     },
     {
       label: "Girl Edition Vol 2",
@@ -147,6 +148,9 @@ export function Header() {
 
           <Link to="/shop" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Shop</Link>
           <Link to="/parents-corner" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Parent's Corner</Link>
+          {FEATURES.SHOW_STUDENT_GALLERY && (
+            <Link to="/gallery" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Student Gallery</Link>
+          )}
           <Link to="/faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>FAQ</Link>
           <Link to="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" activeProps={{ className: "text-sm font-medium text-primary" }}>Contact</Link>
         </nav>
@@ -225,6 +229,9 @@ export function Header() {
 
           <Link to="/shop" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Shop</Link>
           <Link to="/parents-corner" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Parent's Corner</Link>
+          {FEATURES.SHOW_STUDENT_GALLERY && (
+            <Link to="/gallery" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Student Gallery</Link>
+          )}
           <Link to="/faq" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">FAQ</Link>
           <Link to="/contact" onClick={() => setOpen(false)} className="block text-sm font-medium text-foreground py-2">Contact</Link>
           <Link to="/shop" onClick={() => setOpen(false)} className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground w-full mt-2">

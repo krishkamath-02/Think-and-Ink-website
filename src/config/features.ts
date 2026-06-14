@@ -10,4 +10,5 @@ export const FEATURES = {
   SHOW_PARENT_CORNER: true,    // Keep the blog section visible (user didn't ask to hide this)
   SHOW_RAZORPAY: true,         // Display the 'Pay Online' button
   ENABLE_BUNDLE_DISCOUNT: false, // Disable the automatic 10% / 15% bundle offers for now
+  SHOW_STUDENT_GALLERY: false, // Hide the Student Gallery from main site
 };

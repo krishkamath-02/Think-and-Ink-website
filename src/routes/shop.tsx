@@ -164,7 +164,7 @@ export const Route = createFileRoute("/shop")({
                   "@type": "Offer",
                   "priceCurrency": "INR",
                   "price": "599",
-                  "availability": "https://schema.org/InStock"
+                  "availability": "https://schema.org/OutOfStock"
                 }
               }
             },
@@ -319,8 +319,8 @@ function ShopPage() {
     {
       title: "Brave • Curious • Me  Girl Edition",
       desc: "Our signature guided journal packed with prompts, affirmations, and creative exercises for ages 6–12.",
-      price: "₹599",
-      badge: null,
+      price: "Sold Out",
+      badge: "Sold Out",
       amazonLink: "https://mybook.to/thinkandink-girl",
       images: [girlCover3d, coverFull, girlEdition1, girlEdition2, girlEdition3, girlEdition4, girlEdition5, girlEdition6, girlEdition7],
       icon: BookOpen,

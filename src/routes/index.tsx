@@ -410,7 +410,7 @@ function Index() {
           <Reveal delay={0.1} className="flex justify-center mb-16">
             <div className="inline-flex flex-wrap md:flex-nowrap bg-background p-1.5 rounded-3xl md:rounded-full border border-border/50 shadow-sm relative max-w-full justify-center gap-1.5">
               {[
-                { id: 'girl', label: '🌸 Girl Vol 1', color: 'text-primary', activeBg: 'bg-primary/10' },
+                { id: 'girl', label: '🌸 Girl Vol 1 (Sold Out)', color: 'text-primary', activeBg: 'bg-primary/10' },
                 { id: 'girlV2', label: '🌸 Girl Vol 2', color: 'text-primary', activeBg: 'bg-primary/10' },
                 { id: 'boy', label: '🚀 Boy Vol 1', color: 'text-teal', activeBg: 'bg-teal/10' },
                 { id: 'lifeSkills', label: '🧠 Life Skills', color: 'text-emerald-600', activeBg: 'bg-emerald-50' },

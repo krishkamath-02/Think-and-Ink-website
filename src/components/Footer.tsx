@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Mail } from "lucide-react";
 import logoBrown from "@/assets/logo/logo-brown.png";
+import { FEATURES } from "@/config/features";
 
 export function Footer() {
   return (
@@ -21,6 +22,9 @@ export function Footer() {
               <Link to="/" className="block text-sm text-background/70 hover:text-background transition-colors">Home</Link>
               <Link to="/about" className="block text-sm text-background/70 hover:text-background transition-colors">About</Link>
               <Link to="/shop" className="block text-sm text-background/70 hover:text-background transition-colors">Shop</Link>
+              {FEATURES.SHOW_STUDENT_GALLERY && (
+                <Link to="/gallery" className="block text-sm text-background/70 hover:text-background transition-colors">Student Gallery</Link>
+              )}
               <Link to="/faq" className="block text-sm text-background/70 hover:text-background transition-colors">FAQ</Link>
               <Link to="/contact" className="block text-sm text-background/70 hover:text-background transition-colors">Contact</Link>
             </div>
